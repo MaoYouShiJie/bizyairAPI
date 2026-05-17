@@ -5,6 +5,10 @@
 <h1 align="center">🚀 BizyAir API 工具</h1>
 
 <p align="center">
+  <a href="README_EN.md">🇺🇸 English</a>
+</p>
+
+<p align="center">
   <b>BizyAir 应用的桌面客户端 — 多 Tab 任务管理 · API Key 自动切换 · 余额查询</b>
 </p>
 
