@@ -1122,14 +1122,27 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
   }
 
   // 自动保存所有输出
-  const autoSaveOutputs = async (outputs) => {
+  const autoSaveOutputs = async (outputs, forTabId) => {
     if (!outputs || outputs.length === 0) return
     try {
       const response = await axios.post('/api/save-outputs', {
         outputs: outputs,
         app_name: appName
       })
-      addLog(`自动保存 ${response.data.savedCount}/${response.data.totalCount} 个输出`, 'success')
+      const data = response.data
+      addLog(`自动保存 ${data.savedCount}/${data.totalCount} 个输出`, 'success')
+      // 用本地路径替换 CDN URL，确保结果图能正常显示
+      if (data.results && data.results.length > 0) {
+        const updatedOutputs = outputs.map((item, i) => {
+          const saved = data.results[i]
+          if (saved && saved.success && saved.url) {
+            return { ...item, object_url: saved.url }
+          }
+          return item
+        })
+        if (forTabId === activeTabId) setResult(updatedOutputs)
+        if (tabDataRef.current[forTabId]) tabDataRef.current[forTabId].result = updatedOutputs
+      }
     } catch (err) {
       addLog(`自动保存失败: ${translateError(err.message)}`, 'error')
     }
@@ -1244,7 +1257,7 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
             if (isCurrentTab) { setResult(outputs); setLoading(false) }
             addLog(`完成! 共${outputs.length}个输出`, 'success')
             updateTabData(tabId, { result: outputs, loading: false, progress: 100, progressText: '完成' })
-            if (outputs.length > 0) autoSaveOutputs(outputs)
+            if (outputs.length > 0) autoSaveOutputs(outputs, tabId)
             window.dispatchEvent(new CustomEvent('bizyair-balance-refresh'))
           } else if (st === 'failed' || st === 'error') {
             const inner = s.data?.data || {}

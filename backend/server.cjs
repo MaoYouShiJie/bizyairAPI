@@ -1233,6 +1233,7 @@ app.post('/api/save-output', async (req, res) => {
       success: true,
       fileName,
       filePath,
+      url: `/输出/${appName}/${today}/${fileName}`,
       relativePath: path.join('输出', appName, today, fileName)
     });
   } catch (err) {
@@ -1296,7 +1297,7 @@ app.post('/api/save-outputs', async (req, res) => {
           timeout: 60000
         });
         fs.writeFileSync(filePath, Buffer.from(response.data));
-        results.push({ success: true, fileName, filePath });
+        results.push({ success: true, fileName, filePath, url: `/输出/${appName}/${today}/${fileName}` });
         console.log(`[保存] ${filePath}`);
       } catch (downloadErr) {
         results.push({ success: false, error: downloadErr.message, url: object_url });
