@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import axios from 'axios'
+import ImageViewer from './ImageViewer'
 
 // ============ AudioUploader - 音频上传组件 ============
 function AudioUploader({ paramKey, value, onChange }) {
@@ -2104,23 +2105,9 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
         )}
       </div>
 
-      {/* 图片查看器 */}
+      {/* 图片查看器（支持滚轮缩放、拖拽平移） */}
       {viewingImage && (
-        <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center cursor-zoom-out"
-          onClick={() => setViewingImage(null)}
-        >
-          <img src={viewingImage} alt="" className="max-w-[90vw] object-contain" style={{ maxHeight: 'calc(100vh - 56px - 32px)' }} />
-          <button
-            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white"
-            onClick={() => setViewingImage(null)}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
-        </div>
+        <ImageViewer src={viewingImage} onClose={() => setViewingImage(null)} />
       )}
 
       {/* 调整大小手柄 */}

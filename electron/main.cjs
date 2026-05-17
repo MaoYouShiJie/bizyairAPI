@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, dialog, ipcMain } = require('electron');
 const path = require('path');
 const http = require('http');
 
@@ -66,11 +66,29 @@ function createWindow() {
   });
 }
 
+// ── 选择保存目录 ────────────────────────────────────────────────────
+let lastSavePath = '';
+ipcMain.handle('select-folder', async () => {
+  try {
+    const result = await dialog.showOpenDialog(mainWindow, {
+      title: '选择图片保存目录',
+      defaultPath: lastSavePath || userDataPath,
+      properties: ['openDirectory', 'createDirectory']
+    });
+    if (result.canceled || !result.filePaths || result.filePaths.length === 0) {
+      return { success: false };
+    }
+    lastSavePath = result.filePaths[0];
+    return { success: true, folder: lastSavePath };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+});
+
 // ── 生产模式：Electron 内置 HTTP 服务器（代理后端+静态前端）──
 function startElectronServer(up) {
   return new Promise((resolve) => {
     const distDir = path.join(__dirname, '..', 'dist');
-    const outputDir = path.join(up, '输出');
     const uploadsDir = path.join(up, 'uploads');
     const backgroundsDir = path.join(up, 'backgrounds');
     const iconsDir = path.join(__dirname, '..', 'icons');
@@ -78,8 +96,8 @@ function startElectronServer(up) {
     electronServer = http.createServer((req, res) => {
       const url = req.url.split('?')[0];
 
-      // ── API 代理到后端 ──────────────────────────────────────────
-      if (url.startsWith('/api')) {
+      // ── API 和输出目录都代理到后端 ──────────────────────────────
+      if (url.startsWith('/api') || url.startsWith('/%E8%BE%93%E5%87%BA') || url.startsWith('/输出')) {
         const options = {
           hostname: 'localhost',
           port: 3003,
@@ -100,31 +118,28 @@ function startElectronServer(up) {
         return;
       }
 
-      // ── 输出目录 ────────────────────────────────────────────────
-      if (url.startsWith('/%E8%BE%93%E5%87%BA') || url.startsWith('/输出')) {
-        const decoded = url.startsWith('/%E8%BE%93%E5%87%BA') ? decodeURIComponent(url) : url;
-        const filePath = decoded.replace(/^\/\u8F93\u51FA/, '');
-        serveStaticFile(path.join(outputDir, filePath), req, res);
-        return;
-      }
-
       // ── 静态资源路径映射 ──────────────────────────────────────
       const staticPaths = [
         ['/uploads', uploadsDir],
         ['/backgrounds', backgroundsDir],
         ['/icons', iconsDir],
       ];
+      // URL 可能含有中文编码（%E6%8D%A2 等），先解码再拼文件路径
+      const decodedUrl = (() => {
+        try { return decodeURIComponent(url); } catch { return url; }
+      })();
       for (const [prefix, dir] of staticPaths) {
-        if (url.startsWith(prefix)) {
-          serveStaticFile(path.join(dir, url.slice(prefix.length)), req, res);
+        if (decodedUrl.startsWith(prefix)) {
+          const filePath = path.join(dir, decodedUrl.slice(prefix.length));
+          serveStaticFile(filePath, req, res);
           return;
         }
       }
 
       // ── 前端 dist 静态文件 ─────────────────────────────────────
-      const ext = path.extname(url);
-      if (ext && ext !== '/') {
-        serveStaticFile(path.join(distDir, url), req, res);
+      const distExt = path.extname(decodedUrl);
+      if (distExt && distExt !== '/') {
+        serveStaticFile(path.join(distDir, decodedUrl), req, res);
         return;
       }
 
@@ -193,20 +208,24 @@ function serveStaticFile(filePath, req, res) {
 }
 
 // ── 关闭清理 ───────────────────────────────────────────────────────
+let isQuitting = false;
 function cleanup() {
+  if (isQuitting) return;
+  isQuitting = true;
   if (electronServer) electronServer.close();
   app.quit();
 }
 
 // ── 启动 ───────────────────────────────────────────────────────────
 app.whenReady().then(async () => {
+  const fs = require('fs');
   if (app.isPackaged) {
-    userDataPath = path.dirname(process.execPath);
+    userDataPath = process.env.PORTABLE_EXECUTABLE_DIR || path.dirname(process.execPath);
   } else {
     userDataPath = path.join(__dirname, '..');
   }
-  if (!require('fs').existsSync(userDataPath)) {
-    require('fs').mkdirSync(userDataPath, { recursive: true });
+  if (!fs.existsSync(userDataPath)) {
+    fs.mkdirSync(userDataPath, { recursive: true });
   }
   console.log('User data path:', userDataPath);
 
@@ -214,27 +233,27 @@ app.whenReady().then(async () => {
   ['apps.json', 'apps_new.json', 'config.json', 'apikey.json'].forEach(file => {
     const src = path.join(__dirname, '..', file);
     const dst = path.join(userDataPath, file);
-    if (!require('fs').existsSync(dst) && require('fs').existsSync(src)) {
-      require('fs').copyFileSync(src, dst);
+    if (!fs.existsSync(dst) && fs.existsSync(src)) {
+      fs.copyFileSync(src, dst);
       console.log('Copied default', file, 'to', dst);
     }
   });
   // 复制 apikey_new.json（用户自定义 key，只复制已存在的文件）
   const srcApiNew = path.join(__dirname, '..', 'apikey_new.json');
   const dstApiNew = path.join(userDataPath, 'apikey_new.json');
-  if (require('fs').existsSync(srcApiNew) && !require('fs').existsSync(dstApiNew)) {
-    require('fs').copyFileSync(srcApiNew, dstApiNew);
+  if (fs.existsSync(srcApiNew) && !fs.existsSync(dstApiNew)) {
+    fs.copyFileSync(srcApiNew, dstApiNew);
     console.log('Copied apikey_new.json to', dstApiNew);
   }
   // 复制 backgrounds 目录（只复制不存在的文件）
   const srcBg = path.join(__dirname, '..', 'backgrounds');
   const dstBg = path.join(userDataPath, 'backgrounds');
-  if (require('fs').existsSync(srcBg)) {
-    if (!require('fs').existsSync(dstBg)) require('fs').mkdirSync(dstBg, { recursive: true });
-    require('fs').readdirSync(srcBg).forEach(f => {
+  if (fs.existsSync(srcBg)) {
+    if (!fs.existsSync(dstBg)) fs.mkdirSync(dstBg, { recursive: true });
+    fs.readdirSync(srcBg).forEach(f => {
       const d = path.join(dstBg, f);
-      if (!require('fs').existsSync(d)) {
-        require('fs').copyFileSync(path.join(srcBg, f), d);
+      if (!fs.existsSync(d)) {
+        fs.copyFileSync(path.join(srcBg, f), d);
         console.log('Copied backgrounds/' + f);
       }
     });
@@ -242,21 +261,19 @@ app.whenReady().then(async () => {
 
   const isProd = app.isPackaged || process.env.ELECTRON_PROD;
   if (isProd) {
-    // 直接加载后端（同一进程），传入用户数据目录
     let backendPath = path.join(__dirname, '..', 'backend', 'server.cjs');
-    if (!require('fs').existsSync(backendPath)) backendPath = path.join(__dirname, '..', 'backend', 'server.js');
+    if (!fs.existsSync(backendPath)) backendPath = path.join(__dirname, '..', 'backend', 'server.js');
     console.log('Loading backend from:', backendPath);
     const mod = require(backendPath);
     const startServer = mod.startServer || mod;
     startServer({ userDataPath });
 
-    // 短暂等待后端启动
     await new Promise(r => setTimeout(r, 2000));
     await startElectronServer(userDataPath);
     createWindow();
 
-    // ELECTRON_PROD 环境下按 F12 打开 DevTools 方便调试
-    if (process.env.ELECTRON_PROD && mainWindow) {
+    // F12 打开 DevTools（开发/打包版均有效）
+    if (mainWindow) {
       mainWindow.webContents.on('before-input-event', (event, input) => {
         if (input.key === 'F12') {
           mainWindow.webContents.toggleDevTools();

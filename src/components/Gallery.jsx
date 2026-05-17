@@ -186,6 +186,7 @@ export default function Gallery({ onClose }) {
   const [currentFolder, setCurrentFolder] = useState(null)
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(true)
+  const [saveDir, setSaveDir] = useState('')
 
   // 前端缓存：文件夹内容按名称缓存，返回时不重新请求
   const folderCacheRef = useRef({})
@@ -245,7 +246,30 @@ export default function Gallery({ onClose }) {
 
   useEffect(() => {
     loadFolders()
+    loadSaveDir()
   }, [])
+
+  const loadSaveDir = async () => {
+    try {
+      const res = await axios.get('/api/config/save-dir')
+      setSaveDir(res.data.saveDir || '')
+    } catch {}
+  }
+
+  const handleSelectDir = async () => {
+    try {
+      if (!window.electronAPI?.selectFolder) return
+      const result = await window.electronAPI.selectFolder()
+      if (!result.success) return
+      const res = await axios.put('/api/config/save-dir', { dir: result.folder })
+      setSaveDir(res.data.saveDir)
+      foldersLoadedRef.current = false
+      folderCacheRef.current = {}
+      loadFolders()
+    } catch (err) {
+      console.error('选择目录失败:', err)
+    }
+  }
 
   // 绑定非 passive wheel 事件，防止浏览器默认滚动行为
   useEffect(() => {
@@ -265,6 +289,7 @@ export default function Gallery({ onClose }) {
 
     const handleKeyDown = (e) => {
       if (renamingIndex !== null) return // 重命名时不响应
+      if (e.target.closest('input, textarea, select')) return
 
       const mediaFiles = sortedFiles.filter(f => {
         const t = getMediaType(f)
@@ -385,7 +410,8 @@ export default function Gallery({ onClose }) {
     setLoading(true)
     try {
       const response = await axios.get('/api/gallery/folders')
-      setFolders(response.data.folders)
+      const list = response.data.folders
+      setFolders(list)
       foldersLoadedRef.current = true
     } catch (err) {
       console.error('加载文件夹列表失败:', err)
@@ -719,7 +745,7 @@ export default function Gallery({ onClose }) {
                 </svg>
                 返回资产库
               </button>
-              <span className="text-white font-medium text-sm">{currentFolder}</span>
+              <span className="text-white font-medium text-sm">{currentFolder === '__root__' ? saveDir.split('\\').pop() || saveDir : currentFolder}</span>
               <span className="text-slate-500 text-xs">· {imageFiles.length} 个文件</span>
             </>
           ) : (
@@ -734,8 +760,36 @@ export default function Gallery({ onClose }) {
           )}
         </div>
 
+        {/* 保存目录路径栏（资产库根视图时显示） */}
+        {!currentFolder && (
+          <div className="flex items-center gap-2 flex-1 max-w-3xl mx-6">
+            <button
+              onClick={handleSelectDir}
+              className="flex items-center gap-2 px-3 h-8 rounded-md bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 hover:border-slate-600/50 text-indigo-300 text-sm transition shrink-0"
+              title="选择保存目录"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span className="text-slate-400">选择</span>
+            </button>
+            <div className="flex-1 flex items-center h-8 px-3 bg-slate-800/60 border border-slate-700/40 rounded-md text-slate-300 text-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-500 shrink-0 mr-2">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+              </svg>
+              <input
+                type="text"
+                value={saveDir}
+                readOnly
+                className="flex-1 bg-transparent outline-none text-slate-300 text-sm truncate cursor-default"
+              />
+            </div>
+          </div>
+        )}
+
         {/* 排序控制 */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}

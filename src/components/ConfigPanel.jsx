@@ -274,7 +274,6 @@ export default function ConfigPanel({ onClose }) {
         <div
           ref={listRef}
           className="flex-1 overflow-y-auto p-6 relative"
-          style={{ userSelect: 'none' }}
         >
           <div className="space-y-3 relative">
             {apiKeys.map((keyItem, idx) => (
@@ -296,7 +295,7 @@ export default function ConfigPanel({ onClose }) {
                 >
                   {editingKey?.id === keyItem.id ? (
                     <div className="space-y-3">
-                      <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Key 名称" className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white" />
+                      <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Key 名称" autoFocus className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white" />
                       <input type="text" value={formKey} onChange={(e) => setFormKey(e.target.value)} placeholder="API Key" className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white font-mono text-sm" />
                       <div className="flex gap-2">
                         <button onClick={handleUpdateKey} className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition">保存</button>
@@ -360,7 +359,7 @@ export default function ConfigPanel({ onClose }) {
           {showAddForm ? (
             <div className="p-4 border border-purple-300/30 rounded-lg bg-white/5 space-y-3">
               <h3 className="text-lg font-semibold text-white">添加新 API Key</h3>
-              <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Key 名称" className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white" />
+              <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Key 名称" autoFocus className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white" />
               <input type="text" value={formKey} onChange={(e) => setFormKey(e.target.value)} placeholder="sk-xxxxxxxxxx" className="w-full px-4 py-2 bg-white/10 border border-purple-300/30 rounded-lg text-white font-mono text-sm" />
               <div className="flex gap-2">
                 <button onClick={handleAddKey} className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition">添加</button>

@@ -13,14 +13,42 @@ const PORT = process.env.PORT || 3003;
 // ── 数据目录（用户持久化） ──────────────────────────────────────────
 let dataDir = path.join(__dirname, '..'); // 默认：源码根目录
 
+// 路径变量（在 startServer 中通过 reloadDataDirPaths 重新计算）
+let configPath = path.join(dataDir, 'apps.json');
+let configNewPath = path.join(dataDir, 'apps_new.json');
+let uploadsDir = path.join(dataDir, 'uploads');
+let bizConfigPath = path.join(dataDir, 'apikey.json');
+let bizNewConfigPath = path.join(dataDir, 'apikey_new.json');
+let settingsPath = path.join(dataDir, 'config.json');
+let saveDir;
+let CACHE_FILE;
+let watchDir;
+let watchTimer = null;
+let THUMB_DIR;
+
+function reloadDataDirPaths() {
+  configPath = path.join(dataDir, 'apps.json');
+  configNewPath = path.join(dataDir, 'apps_new.json');
+  uploadsDir = path.join(dataDir, 'uploads');
+  bizConfigPath = path.join(dataDir, 'apikey.json');
+  bizNewConfigPath = path.join(dataDir, 'apikey_new.json');
+  settingsPath = path.join(dataDir, 'config.json');
+  saveDir = getSaveDir();
+  CACHE_FILE = path.join(saveDir, '..', '.gallery-cache.json');
+  watchDir = saveDir;
+  THUMB_DIR = path.join(saveDir, '..', '.thumbcache');
+}
+
 function startServer(options = {}) {
   if (options.userDataPath) dataDir = options.userDataPath;
   const port = options.port || PORT;
 
+  reloadDataDirPaths();
+
   // 确保用户数据目录存在
   const userDirs = [
-    path.join(dataDir, '输出'), path.join(dataDir, 'uploads'),
-    path.join(dataDir, '.thumbcache'), path.join(dataDir, 'backgrounds'),
+    saveDir, path.join(dataDir, 'uploads'),
+    THUMB_DIR, path.join(dataDir, 'backgrounds'),
   ];
   userDirs.forEach(dir => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -34,6 +62,13 @@ function startServer(options = {}) {
     console.log(`Backend server running on port ${port}`);
     console.log(`Data directory: ${dataDir}`);
   });
+
+  // 确保缓存和监听使用正确的 dataDir
+  loadCache();
+  if (fs.existsSync(watchDir)) {
+    setupWatcher();
+  }
+
   return server;
 }
 
@@ -51,14 +86,13 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// 输出目录的静态文件服务 — 统一用 sendFile 保证 Range 请求（视频分片加载）
+// 输出目录的静态文件服务
 app.use('/输出', (req, res, next) => {
   try {
     const decodedPath = decodeURIComponent(req.path);
-    const filePath = path.join(dataDir, '输出', decodedPath);
+    const filePath = path.join(saveDir, decodedPath);
 
-    // 安全检查：确保解析后的路径仍在输出目录内
-    if (!filePath.startsWith(path.join(dataDir, '输出'))) {
+    if (!filePath.startsWith(saveDir)) {
       return res.status(403).send('Forbidden');
     }
 
@@ -69,27 +103,33 @@ app.use('/输出', (req, res, next) => {
         maxAge: '1h'
       });
     }
-    // 交给下一个中间件（编码路径处理）
     next();
   } catch (err) {
     next();
   }
 });
 
-// 处理编码后的中文路径（浏览器由于非ASCII字符会自动编码）
-app.get(/^\/%E8%BE%93%E5%87%BA\/(.*)/, (req, res) => {
-  const encodedPath = req.params[0];
-  const decodedPath = decodeURIComponent(encodedPath);
-  const filePath = path.join(dataDir, '输出', decodedPath);
+// 处理编码后的中文路径
+app.get(/^\/%E8%BE%93%E5%87%BA\/(.*)/, (req, res, next) => {
+  try {
+    const encodedPath = req.params[0];
+    const decodedPath = decodeURIComponent(encodedPath);
+    const filePath = path.join(saveDir, decodedPath);
 
-  if (!filePath.startsWith(path.join(dataDir, '输出'))) {
-    return res.status(403).send('Forbidden');
-  }
+    if (!filePath.startsWith(saveDir)) {
+      return res.status(403).send('Forbidden');
+    }
 
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath, { acceptRanges: true, cacheControl: true, maxAge: '1h' });
-  } else {
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath, {
+        acceptRanges: true,
+        cacheControl: true,
+        maxAge: '1h'
+      });
+    }
     res.status(404).send('File not found');
+  } catch (err) {
+    next();
   }
 });
 
@@ -97,11 +137,8 @@ app.get(/^\/%E8%BE%93%E5%87%BA\/(.*)/, (req, res) => {
 const upload = multer({ storage: multer.memoryStorage() });
 
 // 文件路径
-const configPath = path.join(dataDir, 'apps.json');
-const configNewPath = path.join(dataDir, 'apps_new.json');
 const examplesDir = path.join(__dirname, '..', '调用示例');
 const iconsDir = path.join(__dirname, '..', 'icons');
-const uploadsDir = path.join(dataDir, 'uploads');
 
 // 确保资源目录存在
 if (!fs.existsSync(iconsDir)) fs.mkdirSync(iconsDir, { recursive: true });
@@ -380,10 +417,6 @@ app.post('/api/apps/from-file', upload.single('file'), (req, res) => {
 
 // ============= API Key 管理路由 =============
 
-const bizConfigPath = path.join(dataDir, 'apikey.json');
-const bizNewConfigPath = path.join(dataDir, 'apikey_new.json');
-const settingsPath = path.join(dataDir, 'config.json');
-
 // 加载 BizyAir 配置（合并 apikey.json 模板 + apikey_new.json 用户自定义）
 function loadBizConfig() {
   const configs = [];
@@ -431,6 +464,22 @@ function loadSettings() {
 // 保存桌面设置
 function saveSettings(settings) {
   fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), 'utf8');
+}
+
+function getSaveDir() {
+  const settings = loadSettings();
+  if (settings.saveDir && fs.existsSync(settings.saveDir)) {
+    return settings.saveDir;
+  }
+  return path.join(dataDir, '输出');
+}
+
+// 更新 saveDir 并持久化
+function setSaveDir(dir) {
+  saveDir = dir;
+  const settings = loadSettings();
+  settings.saveDir = dir;
+  saveSettings(settings);
 }
 
 // 获取当前 API Key
@@ -617,6 +666,28 @@ app.post('/api/config/keys/:id/select', (req, res) => {
   }
 });
 
+// 6. 获取保存目录
+app.get('/api/config/save-dir', (req, res) => {
+  res.json({ saveDir });
+});
+
+// 7. 设置保存目录
+app.put('/api/config/save-dir', (req, res) => {
+  try {
+    const { dir } = req.body;
+    if (!dir) return res.status(400).json({ error: '缺少目录路径' });
+    // 如果选择的目录下有输出子目录，就使用输出目录；否则直接用选择的路径
+    const outputDir = path.join(dir, '输出');
+    const effectiveDir = fs.existsSync(outputDir) ? outputDir : dir;
+    setSaveDir(effectiveDir);
+    reloadDataDirPaths();
+    clearCache();
+    res.json({ success: true, saveDir });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 查询 Balance（代理 BizyAir 钱包接口）
 app.get('/api/balance', async (req, res) => {
   try {
@@ -779,7 +850,7 @@ app.get('/api/apps/backgrounds', (req, res) => {
       .filter(f => /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(f))
       .map(f => ({
         name: f,
-        url: `/backgrounds/${f}`,
+        url: `/backgrounds/${encodeURIComponent(f)}`,
         size: fs.statSync(path.join(path.join(dataDir, 'backgrounds'), f)).size
       }));
     res.json({ backgrounds: images });
@@ -817,7 +888,7 @@ app.post('/api/apps/background', upload.single('file'), (req, res) => {
     if (existingFile) {
       // 文件已存在且内容相同，直接使用
       fileName = existingFile;
-      url = `/backgrounds/${fileName}`;
+      url = `/backgrounds/${encodeURIComponent(fileName)}`;
       console.log(`[背景] 检测到已有相同文件，直接使用: ${fileName}`);
     } else {
       // 检查同名文件（可能不同内容）
@@ -845,7 +916,7 @@ app.post('/api/apps/background', upload.single('file'), (req, res) => {
       
       const filePath = path.join(path.join(dataDir, 'backgrounds'), fileName);
       fs.writeFileSync(filePath, req.file.buffer);
-      url = `/backgrounds/${fileName}`;
+      url = `/backgrounds/${encodeURIComponent(fileName)}`;
       console.log(`[背景] 上传新文件: ${fileName}`);
     }
     
@@ -1197,7 +1268,7 @@ app.post('/api/save-output', async (req, res) => {
     
     const today = new Date().toISOString().split('T')[0];
     const appName = app_name || '未知应用';
-    const baseDir = path.join(dataDir, '输出', appName, today);
+    const baseDir = path.join(saveDir, appName, today);
     
     if (!fs.existsSync(baseDir)) {
       fs.mkdirSync(baseDir, { recursive: true });
@@ -1254,7 +1325,7 @@ app.post('/api/save-outputs', async (req, res) => {
     const results = [];
     const today = new Date().toISOString().split('T')[0];
     const appName = app_name || '未知应用';
-    const baseDir = path.join(dataDir, '输出', appName, today);
+    const baseDir = path.join(saveDir, appName, today);
     
     if (!fs.existsSync(baseDir)) {
       fs.mkdirSync(baseDir, { recursive: true });
@@ -1317,7 +1388,6 @@ app.post('/api/save-outputs', async (req, res) => {
 });
 
 // ============= 相册缓存（持久化 + fs.watch 监听） =============
-const CACHE_FILE = path.join(dataDir, '.gallery-cache.json');
 let galleryCacheData = null; // 内存缓存，启动时从文件加载
 
 function loadCache() {
@@ -1361,8 +1431,6 @@ function clearCache() {
 }
 
 // 监听输出目录变化，自动更新缓存
-const watchDir = path.join(dataDir, '输出');
-let watchTimer = null;
 function setupWatcher() {
   if (!fs.existsSync(watchDir)) return;
   try {
@@ -1380,15 +1448,8 @@ function setupWatcher() {
   }
 }
 
-// 启动时加载缓存并启动监听
-loadCache();
-if (fs.existsSync(watchDir)) {
-  setupWatcher();
-}
-
 // ============= 缩略图 API =============
 const sharp = require('sharp');
-const THUMB_DIR = path.join(dataDir, '.thumbcache');
 
 // 生成缩略图：长边 360px，保持比例，缓存到 .thumbcache 目录
 app.get('/api/thumbnail', async (req, res) => {
@@ -1398,8 +1459,8 @@ app.get('/api/thumbnail', async (req, res) => {
 
     // 安全检查：只允许输出目录下的文件
     const decodedPath = decodeURIComponent(imgPath.replace(/^\/输出\//, ''));
-    const sourceFile = path.join(dataDir, '输出', decodedPath);
-    if (!sourceFile.startsWith(path.join(dataDir, '输出'))) {
+    const sourceFile = path.join(saveDir, decodedPath);
+    if (!sourceFile.startsWith(saveDir)) {
       return res.status(403).send('Forbidden');
     }
     if (!fs.existsSync(sourceFile)) {
@@ -1449,7 +1510,7 @@ app.get('/api/gallery', async (req, res) => {
     const cached = getCache(cacheKey);
     if (cached) return res.json(cached);
 
-    const outputDir = path.join(dataDir, '输出');
+    const outputDir = saveDir;
     
     if (!fs.existsSync(outputDir)) {
       return res.json({ files: [], apps: [], dates: [] });
@@ -1540,7 +1601,7 @@ app.delete('/api/gallery', async (req, res) => {
     }
     
     // 安全检查：只允许删除输出目录下的文件
-    const outputDir = path.join(dataDir, '输出');
+    const outputDir = saveDir;
     const fullPath = path.join(outputDir, file_path.replace(/^\/输出\//, ''));
     
     if (!fullPath.startsWith(outputDir)) {
@@ -1570,7 +1631,7 @@ app.post('/api/gallery/rename', async (req, res) => {
     }
     
     // 安全检查：只允许重命名输出目录下的文件
-    const outputDir = path.join(dataDir, '输出');
+    const outputDir = saveDir;
     const oldFullPath = path.join(outputDir, old_path.replace(/^\/输出\//, ''));
     
     if (!oldFullPath.startsWith(outputDir)) {
@@ -1608,7 +1669,7 @@ app.get('/api/gallery/folders', async (req, res) => {
       return res.json(cached)
     }
 
-    const outputDir = path.join(dataDir, '输出');
+    const outputDir = saveDir;
 
     if (!fs.existsSync(outputDir)) {
       return res.json({ folders: [] });
@@ -1677,6 +1738,38 @@ app.get('/api/gallery/folders', async (req, res) => {
     // 按文件数排序
     folders.sort((a, b) => b.count - a.count);
 
+    // 如果没有子文件夹，检查根目录是否有文件（扁平目录）
+    if (folders.length === 0) {
+      const rootFiles = fs.readdirSync(outputDir).filter(f => {
+        if (f.startsWith('.')) return false;
+        const ext = path.extname(f).toLowerCase();
+        return !!getMediaTypeByExt(ext);
+      });
+      if (rootFiles.length > 0) {
+        // 找封面
+        let cover = null;
+        const covers = [];
+        rootFiles.sort();
+        for (const f of rootFiles) {
+          const ext = path.extname(f).toLowerCase();
+          if (getMediaTypeByExt(ext) === 'image') {
+            const url = `/输出/${encodeURIComponent(f)}`;
+            if (!cover) cover = url;
+            covers.push(url);
+            if (covers.length >= 3) break;
+          }
+        }
+        folders.push({
+          name: '__root__',
+          count: rootFiles.length,
+          cover: cover,
+          covers: covers.length > 0 ? covers : null,
+          coverType: 'image',
+          _isRoot: true
+        });
+      }
+    }
+
     const result = { folders };
     setCache('folders', result);
     res.json(result);
@@ -1697,8 +1790,9 @@ app.get('/api/gallery/folder/:name', async (req, res) => {
       return res.json(cached)
     }
 
-    const outputDir = path.join(dataDir, '输出');
-    const folderPath = path.join(outputDir, folderName);
+    const outputDir = saveDir;
+    // __root__ 表示扁平目录，直接扫描 saveDir
+    const folderPath = folderName === '__root__' ? outputDir : path.join(outputDir, folderName);
     
     if (!fs.existsSync(folderPath)) {
       return res.json({ files: [] });
