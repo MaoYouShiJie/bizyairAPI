@@ -18,6 +18,7 @@ apikey_new.json
 .thumbcache/
 .gallery-cache.json
 release/
+*.zip
 
 # 文件夹保留但内容不上传（除 .gitkeep）
 uploads/*
