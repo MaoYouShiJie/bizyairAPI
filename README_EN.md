@@ -109,9 +109,8 @@ bizyairAPI/
 ├── 🗂️ 输出/                     # Task outputs (gitignored)
 ├── 📑 调用示例/                 # Example files
 ├── 📘 使用教程/                 # Tutorial screenshots
-├── 🔑 apikey.json               # Production key config (committed, packaged)
-├── 🔒 apikey_new.json           # Test keys (gitignored, not packaged)
-├── 📋 apps.json                 # Production app config (committed, packaged)
+├── 🔑 apikey.json               # API key config (committed, packaged)
+├── 📋 apps.json                 # App config (committed, packaged)
 ├── 🗃️ apps_new.json             # Test app config (gitignored, not packaged)
 ├── ⚙️ config.json               # Config file
 ├── 🎨 icons/                    # App icons
@@ -148,7 +147,7 @@ npm run build
 
 ### 🔑 Configure API Keys
 
-`apikey.json` is the production key config (packaged into the exe). `apikey_new.json` is for test keys (**not tracked by git, not packaged into the exe**) — drop keys in temporarily for testing before packaging, no need to delete manually.
+`apikey.json` is the API key config file (packaged into the exe). Edit it with your keys to get started.
 
 ### ▶️ Test Locally
 
@@ -206,8 +205,7 @@ Ensure `npm install` has completed and `backend/server.cjs` exists. Default conf
 <details>
 <summary><b>🔑 API Key not working</b></summary>
 
-- Keys in `apikey_new.json` override those in `apikey.json`
-- Check that the JSON is valid and `id` values are unique
+Check that `apikey.json` has valid JSON and `id` values are unique.
 </details>
 
 <details>

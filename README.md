@@ -109,9 +109,8 @@ bizyairAPI/
 ├── 🗂️ 输出/                     # 任务输出（git 忽略）
 ├── 📑 调用示例/                 # 示例文件
 ├── 📘 使用教程/                 # 教程截图
-├── 🔑 apikey.json               # 正式 Key 配置（提交 git，打包进 exe）
-├── 🔒 apikey_new.json           # 测试用 Key（git 忽略，不打包）
-├── 📋 apps.json                 # 正式应用配置（提交 git，打包进 exe）
+├── 🔑 apikey.json               # API Key 配置（提交 git，打包进 exe）
+├── 📋 apps.json                 # 应用配置（提交 git，打包进 exe）
 ├── 🗃️ apps_new.json             # 测试用应用配置（git 忽略，不打包）
 ├── ⚙️ config.json               # 配置文件
 ├── 🎨 icons/                    # 应用图标
@@ -148,7 +147,7 @@ npm run build
 
 ### 🔑 配置 API Key
 
-`apikey.json` 是正式 Key 配置文件（会被打包进 exe）；`apikey_new.json` 是测试用 Key（**不会被 git 追踪，也不会被打包进 exe**），打包前临时放 Key 测试用，不用手动删。
+`apikey.json` 是 API Key 配置文件（会被打包进 exe），编辑它填入你的 Key 即可使用。
 
 ### ▶️ 本地测试
 
@@ -206,8 +205,7 @@ npm run dist:portable   # 便携版（单 exe 文件）
 <details>
 <summary><b>🔑 API Key 不生效</b></summary>
 
-- `apikey_new.json` 中的 Key 会覆盖 `apikey.json`
-- 检查 JSON 格式是否正确，`id` 不能重复
+检查 `apikey.json` 格式是否正确，`id` 不能重复。
 </details>
 
 <details>
