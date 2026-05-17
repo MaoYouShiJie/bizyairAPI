@@ -28,13 +28,13 @@
 
 | Feature | Description |
 |---------|-------------|
-| 📑 **Multi-tab** | Each tab runs independently — parallel task execution |
+| 🗂️ **Multi-tab** | Each tab runs independently — parallel task execution |
 | 🧠 **Smart Parameter Detection** | Auto-detects parameter types (image, audio, text, number, etc.) |
 | 🔑 **API Key Management** | Multiple keys, auto-rotate, automatic retry on failure |
 | 💰 **Balance Query** | Real-time BZ coin balance for each key |
 | 🖼️ **Desktop App** | Native window experience, Electron packaging, F12 DevTools |
 | 🖥️ **Custom Wallpaper** | Custom background image with transparent taskbar |
-| 📂 **Gallery** | Auto-archived task outputs with thumbnail preview |
+| 🖼️ **Gallery** | Auto-archived task outputs with thumbnail preview |
 | 🔄 **Auto Retry** | Rate-limit / queue-full / low-balance → auto switch to next key |
 
 ---
@@ -68,7 +68,7 @@
 
 ```
 bizyairAPI/
-├── 📦 backend/                  # Express backend
+├── 🗄️ backend/                  # Express backend
 │   └── 📜 server.cjs           # Main server (2,083 lines)
 ├── ⚛️ src/                      # React frontend
 │   ├── 🧩 components/          # Component library
@@ -78,14 +78,14 @@ bizyairAPI/
 │   ├── ⚙️ main.cjs            # Main process
 │   └── 🔌 preload.cjs          # Preload script
 ├── 🖼️ backgrounds/              # Wallpapers (only backgrounds.jpg tracked)
-├── 📤 uploads/                  # User uploads (gitignored)
-├── 📁 输出/                     # Task outputs (gitignored)
-├── 📚 调用示例/                 # Example files
-├── 📖 使用教程/                 # Tutorial screenshots
+├── ⬆️ uploads/                  # User uploads (gitignored)
+├── 🗂️ 输出/                     # Task outputs (gitignored)
+├── 📑 调用示例/                 # Example files
+├── 📘 使用教程/                 # Tutorial screenshots
 ├── 🔑 apikey.json               # API key template (committed)
 ├── 🔒 apikey_new.json           # Your real keys (gitignored)
 ├── 📋 apps.json                 # App template (committed)
-├── 📋 apps_new.json             # Your apps (gitignored)
+├── 🗃️ apps_new.json             # Your apps (gitignored)
 ├── ⚙️ config.json               # Config file
 ├── 🎨 icons/                    # App icons
 └── 📦 package.json              # Single-root dependencies
@@ -103,7 +103,7 @@ bizyairAPI/
 | 📦 **npm** | 9+ |
 | 🪟 **OS** | Windows 10+ |
 
-### 💿 Installation
+### ⚡ Installation
 
 ```bash
 git clone https://github.com/MaoYouShiJie/bizyairAPI.git
@@ -131,7 +131,7 @@ The backend merges `apikey.json` (template) + `apikey_new.json` (your keys) on l
 ### ▶️ Run
 
 ```bash
-# 🔬 Development mode (HMR)
+# 💻 Development mode (HMR)
 npm run dev
 
 # 🏭 Production mode (Electron, recommended)
@@ -146,7 +146,7 @@ npm run dist
 ## 🎮 Usage Guide
 
 ### 1️⃣ Add an App
-> 📥 Click an app in the sidebar to add it to the desktop, or drag in a `.txt` example file
+> ➕ Click an app in the sidebar to add it to the desktop, or drag in a `.txt` example file
 
 ### 2️⃣ Edit Parameters
 > 🧠 Parameters are auto-detected with proper input controls; upload images / audio as needed
@@ -155,7 +155,7 @@ npm run dist
 > ▶️ Click "Run" → API call → real-time progress polling → multi-tab parallel execution
 
 ### 4️⃣ View Results
-> 👁️ Preview images / video / audio, view elapsed time, download original files
+> 🎯 Preview images / video / audio, view elapsed time, download original files
 
 ---
 
