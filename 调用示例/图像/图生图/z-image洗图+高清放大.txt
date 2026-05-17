@@ -1,0 +1,12 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 42521,
+  "suppress_preview_output": false,
+  "input_values": {
+    "59:LoadImage.image": "https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20251224/oauJNodQMmhpU6iE6ZeBykowCh8E4h1h.png",
+    "58:KSampler.denoise": 0.16
+  }
+}'

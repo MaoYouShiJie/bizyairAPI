@@ -1,0 +1,16 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 44124,
+  "suppress_preview_output": false,
+  "input_values": {
+    "52:LoadImage.image": "https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260115/24brLflyrPErfGiUa0HrExejaCvhnJGF.png",
+    "142:INTConstant.value": 5,
+    "151:PrimitiveStringMultiline.value": "a slow dolly-in begins at 50mm, f/2.2, framing the subject’s face in a medium close-up as her eyes—those piercing, electric-blue irises—gently shift focus from the viewer to a point just beyond the frame’s edge, suggesting an internal reckoning. The camera glides forward with a whisper of resistance, mirroring the subtle tension in her jawline, while a single, cool LED light source from the upper left casts sharp highlights along her silver bangs and the collar of her dark uniform, rendering the fabric’s crisp white stripes with high-contrast texture. Behind her, a deep crimson ribbon tied in a loose bow at her shoulder catches the ambient glow, its saturated hue bleeding into the cool shadows of the environment. The air is still, thick with the scent of ozone and old paper, and a faint, rhythmic ticking from unseen machinery pulses beneath the silence. *",
+    "149:INTConstant.value": 480,
+    "150:INTConstant.value": 720,
+    "147:Float.Number": "16"
+  }
+}'

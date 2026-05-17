@@ -1,0 +1,11 @@
+{
+  "iconSize": "medium",
+  "sortBy": "name",
+  "sortOrder": "asc",
+  "backgroundImage": "/backgrounds/ComfyUI_00001_jnxyu_1765852714.png",
+  "backgroundSize": "cover",
+  "desktopOpacity": 100,
+  "autoSwitch": true,
+  "autoSwitchIndex": 2,
+  "appOrder": null
+}

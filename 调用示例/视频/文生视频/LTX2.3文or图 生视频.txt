@@ -1,0 +1,19 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 48214,
+  "suppress_preview_output": false,
+  "input_values": {
+    "173:CLIPTextEncode.text": "一个性感的女人在跳魅惑的舞,她发出轻微的\"嗯~\" \"哼~\"的声音.",
+    "208:PrimitiveBoolean.value": true,
+    "206:LoadImage.image": "https://storage.bizyair.cn/inputs/20260311/Kn57707AHPRvESxqBk6BWMVZKpzmJBq8.png",
+    "192:EmptyImage.width": 720,
+    "192:EmptyImage.height": 1280,
+    "192:EmptyImage.batch_size": 1,
+    "254:INTConstant.value": 169,
+    "182:PrimitiveInt.value": 24,
+    "185:KSamplerSelect.sampler_name": "euler_ancestral"
+  }
+}'

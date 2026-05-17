@@ -1,0 +1,15 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 52559,
+  "suppress_preview_output": false,
+  "input_values": {
+    "76:LoadImage.image": "https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260425/aQnu9IEkrZZOZJfyvXnAkuy2AOU3fN4F.png",
+    "117:CR Text.text": "动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,",
+    "155:CustomCombo.choice": "Flux2_Klein_官方", #可选: Flux2_Klein_官方,Flux2_Klein_黑兽,
+    "106:EmptyFlux2LatentImage.batch_size": 1,
+    "109:Flux2Scheduler.steps": 10
+  }
+}'

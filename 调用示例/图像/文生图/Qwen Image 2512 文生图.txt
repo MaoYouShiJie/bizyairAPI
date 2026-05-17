@@ -1,0 +1,14 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 48845,
+  "suppress_preview_output": false,
+  "input_values": {
+    "84:CLIPTextEncode.text": "高达风格的机械拼装玩具，螳螂，3D渲染，工业风，有灯光，纯灰色背景",
+    "80:CLIPTextEncode.text": "色调艳丽，过曝，静态，细节模糊不清，风格，作品，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，杂乱的背景，三条腿，",
+    "81:EmptySD3LatentImage.width": 1280,
+    "81:EmptySD3LatentImage.height": 1280
+  }
+}'

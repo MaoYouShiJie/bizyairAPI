@@ -1,0 +1,86 @@
+{
+  "name": "bizyair-api-tool",
+  "version": "1.0.0",
+  "description": "BizyAir API 工具",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "build": "vite build",
+    "electron": "electron .",
+    "electron:prod": "chcp 65001>nul && set ELECTRON_PROD=true&& electron .",
+    "dist": "vite build && electron-builder --win --x64",
+    "dist:portable": "vite build && electron-builder --win portable"
+  },
+  "dependencies": {
+    "axios": "^1.16.1",
+    "cors": "^2.8.6",
+    "express": "^4.22.2",
+    "http-proxy-middleware": "^3.0.5",
+    "multer": "^1.4.5-lts.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.0"
+  },
+  "build": {
+    "appId": "com.bizyair.api-tool",
+    "productName": "BizyAirAPI",
+    "directories": {
+      "output": "release"
+    },
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "backend/**/*",
+      "electron/**/*",
+      "apps.json",
+      "apps_new.json",
+      "config.json",
+      "backgrounds/**/*",
+      "uploads/**/*",
+      "icons/**/*",
+      "!apikey_new.json",
+      "!.gallery-cache.json",
+      "!.thumbcache/**/*",
+      "!输出/**/*",
+      "!调用示例/**/*"
+    ],
+    "extraMetadata": {
+      "main": "electron/main.cjs"
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "BizyAir API 工具-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BizyAir API 工具"
+    }
+  }
+}

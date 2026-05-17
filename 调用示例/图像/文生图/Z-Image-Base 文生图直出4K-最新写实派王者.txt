@@ -1,0 +1,14 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 45283,
+  "suppress_preview_output": false,
+  "input_values": {
+    "45:JjkText.text": "日常快照风格高质量图像，自然黑色发色，坐在桌边，妆容精致，冷白皮，清透氛围妆容，韩系发型，唯美，氛围感。姿势合理，绝美构图，大师杰作，光感，8K，构图合理有层次。看镜头不对称美学，高级温馨艺术感有格调木质墙壁房间，木桌上放着拉花咖啡。他拍视角。氛围感。高清，细节，画面丰富。不改变画面中人物细节和构图，添加梦幻朦胧感，画面因快门速度不足产生轻微运动模糊，构图随性却满是生活里的鲜活日常。一位20岁可爱甜系的少女，黑色长发自然垂落，湛佳琳CCD拍摄风格，穿着浅咖色毛衣外套，灰色短百褶裙，戴着咖色毛毛线帽，整体构图随意，具有因快门不足导致的运动模糊效果，随手一拍表情微笑",
+    "4:KSampler.steps": "40",
+    "36:EmptySD3LatentImage.width": "1088",
+    "36:EmptySD3LatentImage.height": "2080"
+  }
+}'

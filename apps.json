@@ -1,0 +1,205 @@
+{
+  "apps": [
+    {
+      "id": "app_1778840277995_0ka74stbv",
+      "name": "Joy_Caption3 反推提示词",
+      "web_app_id": 49552,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 49552,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"18:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260311/s4CCGVhxNmitxnZcD7oC0v72ptrYkV8t.png\",\r\n    \"21:BizyAirJoyCaption3.extra_options\": \"\",\r\n    \"21:BizyAirJoyCaption3.custom_prompt\": \"\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891570_uwrt7t311",
+      "name": "Flux2_Klein_动漫转真人",
+      "web_app_id": 52559,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\n  -d '{\n  \"web_app_id\": 52559,\n  \"suppress_preview_output\": false,\n  \"input_values\": {\n    \"76:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260425/aQnu9IEkrZZOZJfyvXnAkuy2AOU3fN4F.png\",\n    \"117:CR Text.text\": \"动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,\",\n    \"155:CustomCombo.choice\": \"Flux2_Klein_官方\", \n    \"106:EmptyFlux2LatentImage.batch_size\": 1,\n    \"109:Flux2Scheduler.steps\": 10\n  }\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891571_1ttp7s7bo",
+      "name": "z-image洗图+高清放大",
+      "web_app_id": 42521,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 42521,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"59:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20251224/oauJNodQMmhpU6iE6ZeBykowCh8E4h1h.png\",\r\n    \"58:KSampler.denoise\": 0.16\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891572_ozzq0w53h",
+      "name": "十视角人物场景道具通用",
+      "web_app_id": 46289,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 46289,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"1:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260207/2xWa6q3ty01qaxOjGpzhY1HYoIODE5UI.png\",\r\n    \"28:KSampler.seed\": 1002,\r\n    \"20:ImageScaleToTotalPixels.megapixels\": 1.5000000000000002,\r\n    \"20:ImageScaleToTotalPixels.resolution_steps\": 7\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891573_qnzz9cc7m",
+      "name": "千问换装【全自动换装+超强一致性】",
+      "web_app_id": 43452,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 43452,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"318:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260109/7bILkA00ewrRV2iselRTMwNaFdFA6pi7.png\",\r\n    \"192:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260109/bOPAQjdg7UjvRpUFtEJ13vncpPTh3WY5.jpg\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891573_9rp8jqvyi",
+      "name": "换脸Flux2Klein双图编辑",
+      "web_app_id": 46874,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 46874,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"99:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/hk6NBx4W2A2wVFH5wOnFh5MHPwvny5OK.png\",\r\n    \"98:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/KR4bIQ9DDl04o7ifEVUET0qZfhC8QYWm.webp\",\r\n    \"100:CR Text.text\": \"参照图像1和图像2，图像1人物换上图像2的头和脸，保持图像1人物保持一致性\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891574_7qcy1p5os",
+      "name": "超高清材质保留换装",
+      "web_app_id": 45211,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45211,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"337:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260128/t4StJJPdnEVkK0xbG0e1ia6BOVdl115P.png\",\r\n    \"378:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260128/gZPSOQUyEuEwYzieh03dmbfFuPSL04HY.jpg\",\r\n    \"364:LayerUtility: ImageScaleByAspectRatio V2.scale_to_length\": 2048\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891575_9s6nua564",
+      "name": "Qwen Image 2512 文生图",
+      "web_app_id": 48845,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 48845,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"84:CLIPTextEncode.text\": \"高达风格的机械拼装玩具，螳螂，3D渲染，工业风，有灯光，纯灰色背景\",\r\n    \"80:CLIPTextEncode.text\": \"色调艳丽，过曝，静态，细节模糊不清，风格，作品，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，杂乱的背景，三条腿，\",\r\n    \"81:EmptySD3LatentImage.width\": 1280,\r\n    \"81:EmptySD3LatentImage.height\": 1280\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891575_em5nbbk88",
+      "name": "Qwen Image 文生图-透明背景",
+      "web_app_id": 38228,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 38228,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"84:CLIPTextEncode.text\": \"Qwen Image文生图-海报\",\r\n    \"88:KSampler.seed\": 354884000907176,\r\n    \"81:EmptySD3LatentImage.width\": 1280,\r\n    \"81:EmptySD3LatentImage.height\": 1280\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891576_zmfvcrj71",
+      "name": "Z-image turbo 标准工作流",
+      "web_app_id": 46445,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 46445,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"6:CLIPTextEncode.text\": \"倾斜构图、远景、超广角、自拍照、景深、空间感、层次感，自拍视角， 古风模特美人，走秀，全身，气质空濛，炎热的夏天，18岁少女，俏皮可爱，中午。电影氛围感，情绪氛围感，线条清晰，明暗对比，超高清，高级感，最高画质，全身镜头拍摄，摩卡少女樱真人拍摄，长发及腰、超长耳坠、碎发、多条细长飞舞发带、宽松彩色汉服露出，如楚辞山鬼般的人物，在昏暗森林里的全身人像写真，丰富细节，含情眼，邪魅，魅惑，朦胧感，丰富的细节，眼神充满故事感，嘴巴微微张开。淡淡的喜悦，发丝凌乱，精致细长耳坠，高质量，写实逼真，光滑水润细腻冷白皮肤肌理，3D高精度建模渲染，立体唇纹反光，细腻皮肤纹理 柔和 8K超清真人比例建模，电影级景深，衣服细节捕捉，瞳孔虹膜分层着色。高饱和全彩。妙龄绝美热情。完美锁骨，冷白光照在脸上。电影级构图。王家卫电影风格。风吹起衣裳飘逸。素衣清颜。简单素雅头饰，临水照影眸含烟，似随时化雾归去。斑驳树影，真人模仿，超高清，超细腻的画面细节，真实的皮肤 纹理，究极衣服细节，光滑细腻的皮肤，扬的头发，细节丰富的发丝，宁静优雅，布满水珠的皮肤，氛围感，32K，超逼真的皮肤纹理，超级详细，高度细节，注重细节，明脂对比，究极细节，大师级光影，层次感，立体感，极致的光线，发细腻，发丝细腻，眼眸俏皮地眨动，姿态灵动，动作自然、角色扮演、模特全身特写\",\r\n    \"13:EmptySD3LatentImage.width\": 1024,\r\n    \"13:EmptySD3LatentImage.height\": 1024,\r\n    \"13:EmptySD3LatentImage.batch_size\": 1\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891576_06qe5wc85",
+      "name": "Z-Image-Base 文生图直出4K-最新写实派王者",
+      "web_app_id": 45283,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45283,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"45:JjkText.text\": \"日常快照风格高质量图像，自然黑色发色，坐在桌边，妆容精致，冷白皮，清透氛围妆容，韩系发型，唯美，氛围感。姿势合理，绝美构图，大师杰作，光感，8K，构图合理有层次。看镜头不对称美学，高级温馨艺术感有格调木质墙壁房间，木桌上放着拉花咖啡。他拍视角。氛围感。高清，细节，画面丰富。不改变画面中人物细节和构图，添加梦幻朦胧感，画面因快门速度不足产生轻微运动模糊，构图随性却满是生活里的鲜活日常。一位20岁可爱甜系的少女，黑色长发自然垂落，湛佳琳CCD拍摄风格，穿着浅咖色毛衣外套，灰色短百褶裙，戴着咖色毛毛线帽，整体构图随意，具有因快门不足导致的运动模糊效果，随手一拍表情微笑\",\r\n    \"4:KSampler.steps\": \"40\",\r\n    \"36:EmptySD3LatentImage.width\": \"1088\",\r\n    \"36:EmptySD3LatentImage.height\": \"2080\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891577_uqzyd0rhn",
+      "name": "Z-Image-Base 高清文生图",
+      "web_app_id": 45318,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45318,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"36:EmptySD3LatentImage.width\": 1088,\r\n    \"36:EmptySD3LatentImage.height\": 2080,\r\n    \"45:JjkText.text\": \"日常快照风格高质量图像，自然黑色发色，坐在桌边，妆容精致，冷白皮，清透氛围妆容，韩系发型，唯美，氛围感。姿势合理，绝美构图，大师杰作，光感，8K，构图合理有层次。看镜头不对称美学，高级温馨艺术感有格调木质墙壁房间，木桌上放着拉花咖啡。他拍视角。氛围感。高清，细节，画面丰富。不改变画面中人物细节和构图，添加梦幻朦胧感，画面因快门速度不足产生轻微运动模糊，构图随性却满是生活里的鲜活日常。一位20岁可爱甜系的少女，黑色长发自然垂落，湛佳琳CCD拍摄风格，穿着浅咖色毛衣外套，灰色短百褶裙，戴着咖色毛毛线帽，整体构图随意，具有因快门不足导致的运动模糊效果，随手一拍表情微笑\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891577_s9wipo1ch",
+      "name": "smoothMixWan22图生视频",
+      "web_app_id": 44124,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 44124,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"52:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260115/24brLflyrPErfGiUa0HrExejaCvhnJGF.png\",\r\n    \"142:INTConstant.value\": 5,\r\n    \"151:PrimitiveStringMultiline.value\": \"a slow dolly-in begins at 50mm, f/2.2, framing the subject's face in a medium close-up as her eyes—those piercing, electric-blue irises—gently shift focus from the viewer to a point just beyond the frame's edge, suggesting an internal reckoning. The camera glides forward with a whisper of resistance, mirroring the subtle tension in her jawline, while a single, cool LED light source from the upper left casts sharp highlights along her silver bangs and the collar of her dark uniform, rendering the fabric's crisp white stripes with high-contrast texture. Behind her, a deep crimson ribbon tied in a loose bow at her shoulder catches the ambient glow, its saturated hue bleeding into the cool shadows of the environment. The air is still, thick with the scent of ozone and old paper, and a faint, rhythmic ticking from unseen machinery pulses beneath the silence. *\",\r\n    \"149:INTConstant.value\": 480,\r\n    \"150:INTConstant.value\": 720,\r\n    \"147:Float.Number\": \"16\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891578_uey0o68g3",
+      "name": "图生视频 Wan2.2_Remix_NSFW",
+      "web_app_id": 44773,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 44773,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"67:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20251219/LbNMmkFnZoJvEqXqkURZAhbB7AjE4m0R.png\",\r\n    \"89:WanVideoImageToVideoEncode.num_frames\": 81,\r\n    \"16:WanVideoTextEncode.positive_prompt\": \"机器人转过身来，发出激光光线\",\r\n    \"68:ImageResizeKJv2.width\": 720,\r\n    \"68:ImageResizeKJv2.height\": 1280\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891578_uewqf0k8w",
+      "name": "首尾帧1280高清Wan2.2_Remix_NSFW",
+      "web_app_id": 44750,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 44750,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"52:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260122/ictdTmMPduPyy1gWxfyYHyVuDF3JyjvM.png\",\r\n    \"53:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260122/isbhW50waP4N3smpSDWTiP4xXaBAVdOa.png\",\r\n    \"26:JWInteger.value\": 81,\r\n    \"30:WanVideoTextEncode.positive_prompt\": \"\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891579_wy2s3t4u0",
+      "name": "LTX2.3文or图 生视频",
+      "web_app_id": 48214,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 48214,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"173:CLIPTextEncode.text\": \"一个性感的女人在跳魅惑的舞,她发出轻微的\\\"嗯~\\\" \\\"哼~\\\"的声音.\",\r\n    \"208:PrimitiveBoolean.value\": true,\r\n    \"206:LoadImage.image\": \"https://storage.bizyair.cn/inputs/20260311/Kn57707AHPRvESxqBk6BWMVZKpzmJBq8.png\",\r\n    \"192:EmptyImage.width\": 720,\r\n    \"192:EmptyImage.height\": 1280,\r\n    \"192:EmptyImage.batch_size\": 1,\r\n    \"254:INTConstant.value\": 169,\r\n    \"182:PrimitiveInt.value\": 24,\r\n    \"185:KSamplerSelect.sampler_name\": \"euler_ancestral\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891580_q00kpjq2b",
+      "name": "index2TTS",
+      "web_app_id": 49794,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 49794,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"85:CR Prompt Text.prompt\": \"你自己看看你做的好事！\",\r\n    \"86:LoadAudio.audio\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260325/ZGOd35yk9FB6iPZzmot1Mj0dZl41iNLQ.mp3\",\r\n    \"83:IndexTTS2Run.emo_text\": \"生气\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1774611891580_na2omp362",
+      "name": "Qwen3-TTS 设计音色制作",
+      "web_app_id": 45577,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45577,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"38:FB_Qwen3TTSVoiceDesign.text\": \"有些事，只要国家需要，就得有人扛起来。\\n我们那一代人，是背着泥土铺路的；\\n你们要做的，是让这条路，通向星辰大海。\",\r\n    \"38:FB_Qwen3TTSVoiceDesign.instruct\": \"角色姓名：林怀岳\\n音色信息：音量洪亮，音域低沉，力度感强的中年男性声音。\\n身份背景：某国家重点科研项目首席顾问，年近七十的资深战略科学家。曾参与国家重大科技攻关工程，历经数十年风雨，见证了从落后追赶到自主创新的艰难历程。现任国家科技咨询委员会终身荣誉委员，仍坚持在一线培养青年人才，为国家战略发展建言献策。\\n外貌特征：身形挺拔，两鬓斑白，眉宇间刻着岁月沉淀的坚毅。常着深色中山装或简洁正装，眼神沉静而锐利，举手投足间自带威严与从容。\\n性格特质：意志如钢，信念坚定，面对挑战从不退缩；胸怀家国，心系民族未来，将个人命运与国家兴衰紧密相连；严谨自律，言出必行，话语中充满责任感与历史担当；外冷内热，表面严肃，实则对后辈寄予厚望，甘为人梯。\\n人生信条：“我们这一代人，不是为了站在光里，而是为了把路铺到光里。”\",\r\n    \"38:FB_Qwen3TTSVoiceDesign.language\": \"Chinese\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27"
+    },
+    {
+      "id": "app_1778833347522_2zgkj0maf",
+      "name": "动作迁移加速版人物一致性视频",
+      "web_app_id": 48972,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 48972,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"52:VHS_LoadVideo.video\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260318/tesunobuQ1AniJUFffH7BX7ywOgzxYzd.mp4\",\n        \"167:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260318/utsnDG0MenaAkx0s0vjajRB5f2Wv42nn.png\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-15"
+    },
+    {
+      "id": "app_1778845936866_1abf1utly",
+      "name": "GPT-20.-单图低价版",
+      "web_app_id": 52885,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 52885,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"20:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260515/myPhw9cB3iDteZQ1ahSyNTB85Mq2iz0g.jpg\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.prompt\": \"动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.aspect_ratio\": \"9:16\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.resolution\": \"4k\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-15"
+    }
+  ],
+  "version": "1.0.0"
+}

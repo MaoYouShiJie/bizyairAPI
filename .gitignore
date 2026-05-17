@@ -1,0 +1,30 @@
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.cache/
+apps_new.json
+apikey_new.json
+.thumbcache/
+.gallery-cache.json
+release/
+
+# 文件夹保留但内容不上传（除 .gitkeep）
+uploads/*
+!uploads/.gitkeep
+输出/*
+!输出/.gitkeep
+
+# backgrounds 只保留默认背景
+backgrounds/*
+!backgrounds/backgrounds.jpg

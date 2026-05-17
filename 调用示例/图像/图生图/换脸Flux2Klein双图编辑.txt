@@ -1,0 +1,13 @@
+# Shell 示例代码
+curl -X POST "https://api.bizyair.cn/w/v1/webapp/task/openapi/create" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+  "web_app_id": 46874,
+  "suppress_preview_output": false,
+  "input_values": {
+    "99:LoadImage.image": "https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/hk6NBx4W2A2wVFH5wOnFh5MHPwvny5OK.png",
+    "98:LoadImage.image": "https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/KR4bIQ9DDl04o7ifEVUET0qZfhC8QYWm.webp",
+    "100:CR Text.text": "参照图像1和图像2，图像1人物换上图像2的头和脸，保持图像1人物保持一致性"
+  }
+}'
