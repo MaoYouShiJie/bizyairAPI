@@ -408,11 +408,23 @@ function saveBizConfig(config) {
 
 // 加载桌面设置
 function loadSettings() {
+  const bgPath = path.join(dataDir, 'backgrounds', 'backgrounds.jpg');
+  const defaultBg = { backgroundImage: '/backgrounds/backgrounds.jpg', backgroundSize: 'cover' };
   try {
     if (fs.existsSync(settingsPath)) {
-      return JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      if (!settings.backgroundImage && fs.existsSync(bgPath)) {
+        Object.assign(settings, defaultBg);
+        saveSettings(settings);
+      }
+      return settings;
     }
   } catch (err) {}
+  // 首次运行：设置默认背景
+  if (fs.existsSync(bgPath)) {
+    saveSettings(defaultBg);
+    return { ...defaultBg };
+  }
   return {};
 }
 

@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <b>Desktop client for BizyAir — Multi-tab task management · Auto-switch API Keys · Balance query</b>
+  <b>Desktop client for BizyAir API — Call BizyAir apps through a GUI for text-to-image, image-to-image, image-to-video, text-to-video, audio cloning, and more AI content generation</b>
 </p>
 
 <p align="center">
@@ -24,18 +24,45 @@
 
 ---
 
+## 🎯 About
+
+**BizyAir API Tool** is a desktop client that lets you **call BizyAir AI apps without writing any code**.
+
+### What it does
+
+BizyAir offers a wide range of AI apps (image generation, video generation, audio synthesis, etc.). Calling their APIs directly requires writing HTTP requests, handling parameter formats, and polling task status. This tool wraps everything into a graphical interface:
+
+| Scenario | Traditional way | With this tool |
+|----------|---------------|----------------|
+| 🖼️ **Text-to-Image / Image-to-Image** | Write JSON, curl API, parse responses | Pick an app → fill params → click run → get results |
+| 🎬 **Image-to-Video / Text-to-Video** | Handle Base64 encoded image/video data | Just drag & drop images, auto-upload |
+| 🎵 **Audio Cloning / Generation** | Manage audio file URLs manually | Upload and use, everything handled |
+| 🔄 **Batch tasks** | Write scripts with loops | Open multiple tabs, run in parallel |
+
+### Core workflow
+
+```
+Pick a BizyAir app → Edit input parameters → Click run
+    ↓
+Auto-call API → Real-time progress polling → Show results when done
+    ↓
+          Preview / download / save to local
+```
+
+---
+
 ## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
-| 🗂️ **Multi-tab** | Each tab runs independently — parallel task execution |
-| 🧠 **Smart Parameter Detection** | Auto-detects parameter types (image, audio, text, number, etc.) |
-| 🔑 **API Key Management** | Multiple keys, auto-rotate, automatic retry on failure |
-| 💰 **Balance Query** | Real-time BZ coin balance for each key |
-| 🖼️ **Desktop App** | Native window experience, Electron packaging, F12 DevTools |
-| 🖥️ **Custom Wallpaper** | Custom background image with transparent taskbar |
-| 🖼️ **Gallery** | Auto-archived task outputs with thumbnail preview |
-| 🔄 **Auto Retry** | Rate-limit / queue-full / low-balance → auto switch to next key |
+| 🗂️ **Multi-tab Parallel** | Run multiple generation tasks simultaneously, each tab independent |
+| 🧠 **Smart Parameter Detection** | Auto-detects parameter types (image, audio, text, number) with proper input controls |
+| 🔑 **Auto Key Rotation** | Multiple keys + auto-switch on rate-limit/queue-full, no manual key swapping |
+| 💰 **Balance Monitor** | Real-time BZ coin balance for each key, know before you run out |
+| 🖼️ **Media Preview** | Preview generated images / video / audio directly, no extra tools needed |
+| 📥 **Drag Result to Input** | Drag a generated image to another tab as input — chain apps together |
+| 🏷️ **Parameter Memory** | Remembers your manual parameter type corrections for next time |
+| 📂 **Output Archive** | Auto-saves successful generations locally with gallery browsing and thumbnails |
 
 ---
 
@@ -82,10 +109,10 @@ bizyairAPI/
 ├── 🗂️ 输出/                     # Task outputs (gitignored)
 ├── 📑 调用示例/                 # Example files
 ├── 📘 使用教程/                 # Tutorial screenshots
-├── 🔑 apikey.json               # API key template (committed)
-├── 🔒 apikey_new.json           # Your real keys (gitignored)
-├── 📋 apps.json                 # App template (committed)
-├── 🗃️ apps_new.json             # Your apps (gitignored)
+├── 🔑 apikey.json               # Production key config (committed, packaged)
+├── 🔒 apikey_new.json           # Test keys (gitignored, not packaged)
+├── 📋 apps.json                 # Production app config (committed, packaged)
+├── 🗃️ apps_new.json             # Test app config (gitignored, not packaged)
 ├── ⚙️ config.json               # Config file
 ├── 🎨 icons/                    # App icons
 └── 📦 package.json              # Single-root dependencies
@@ -94,6 +121,8 @@ bizyairAPI/
 ---
 
 ## 🚀 Quick Start
+
+Follow these steps to build and run the BizyAir API desktop tool, then start generating content through BizyAir apps with a graphical interface.
 
 ### 📋 Prerequisites
 
@@ -111,51 +140,47 @@ cd bizyairAPI
 npm install
 ```
 
-### 🔑 Configure API Keys
-
-Edit `apikey_new.json` (your keys, **not tracked by git**):
-
-```json
-[
-  {
-    "id": "my-key",
-    "name": "Primary Key",
-    "apiKey": "sk-your-api-key-here",
-    "baseUrl": "https://api.bizyair.cn"
-  }
-]
-```
-
-The backend merges `apikey.json` (template) + `apikey_new.json` (your keys) on load, and saves to `apikey_new.json` — the template is never modified.
-
-### ▶️ Run
+### 📦 Build Frontend
 
 ```bash
-# 💻 Development mode (HMR)
-npm run dev
+npm run build
+```
 
-# 🏭 Production mode (Electron, recommended)
-npm run electron:prod
+### 🔑 Configure API Keys
 
-# 📦 Package as exe installer
-npm run dist
+`apikey.json` is the production key config (packaged into the exe). `apikey_new.json` is for test keys (**not tracked by git, not packaged into the exe**) — drop keys in temporarily for testing before packaging, no need to delete manually.
+
+### ▶️ Test Locally
+
+```bash
+npm run electron:prod   # F12 opens DevTools
+```
+
+### 📦 Package
+
+```bash
+npm run dist            # exe installer → release/
+npm run dist:portable   # portable version (single exe file)
 ```
 
 ---
 
-## 🎮 Usage Guide
+## 🎮 Usage Workflow
 
-### 1️⃣ Add an App
-> ➕ Click an app in the sidebar to add it to the desktop, or drag in a `.txt` example file
+### 0️⃣ Add API Key
+> 🔑 Click the settings icon in the bottom-left → Add your BizyAir API keys in the Config panel → Add multiple keys and enable auto-rotation
 
-### 2️⃣ Edit Parameters
-> 🧠 Parameters are auto-detected with proper input controls; upload images / audio as needed
+### 1️⃣ Pick an App
+> ➕ Click an app in the sidebar to add it to the desktop, or drag in a BizyAir `.txt` example file
 
-### 3️⃣ Run a Task
-> ▶️ Click "Run" → API call → real-time progress polling → multi-tab parallel execution
+### 2️⃣ Configure Parameters
+> 🧠 Parameters are auto-detected with proper controls: drag & drop images, edit text directly, pick from dropdowns
 
-### 4️⃣ View Results
-> 🎯 Preview images / video / audio, view elapsed time, download original files
+### 3️⃣ Run Generation
+> ▶️ Click "Run" → auto-call BizyAir API → real-time progress bar + elapsed time → multiple tabs run simultaneously
+
+### 4️⃣ Get Results
+> 🎯 Preview images / video / audio directly after generation, or download to local. Drag result images to another tab as input to chain multiple apps
 
 ---
 
@@ -163,28 +188,10 @@ npm run dist
 
 | Feature | Description |
 |---------|-------------|
-| 🔑 **Multiple Keys** | Add any number of API keys, switch freely |
-| 🔄 **Auto-rotate** | Tasks automatically cycle through keys when enabled |
-| 🔁 **Retry on Failure** | Rate-limit (429) / queue-full (30039) / low-balance → auto switch |
-| 💰 **Balance Query** | Real-time BZ coin balance (gift + charge) for each key |
-
----
-
-## 🏗️ Build & Deploy
-
-```bash
-# Build frontend
-npm run build
-
-# Test production build
-npm run electron:prod       # Quick test, F12 opens DevTools
-
-# Package as exe installer
-npm run dist                # Output to release/
-
-# Package as portable exe
-npm run dist:portable       # Single exe file
-```
+| 🔑 **Multiple Keys** | Add any number of API keys, switch with one click |
+| 🔄 **Auto-rotate** | Automatically cycles through keys on each submission to balance usage |
+| 🔁 **Retry on Failure** | Rate-limit (429) / queue-full (30039) / parallelism exceeded (30040) / low-balance → auto switch to next key |
+| 💰 **Balance Monitor** | Displays gift + charge balance for each key when settings panel opens, auto-refreshes on success |
 
 ---
 
@@ -193,7 +200,7 @@ npm run dist:portable       # Single exe file
 <details>
 <summary><b>❌ Backend fails to start</b></summary>
 
-Ensure `npm install` has completed and `backend/server.cjs` exists. Default configs are copied from resources on first run.
+Ensure `npm install` has completed and `backend/server.cjs` exists. Default configs are copied from the install directory to the exe directory on first run.
 </details>
 
 <details>
@@ -214,9 +221,7 @@ Ensure `npm install` has completed and `backend/server.cjs` exists. Default conf
 <details>
 <summary><b>🪟 Window issues</b></summary>
 
-- Press **F12** to open DevTools
-- Window right edge is automatically clamped
-- Click taskbar icon to restore from minimized state
+Press **F12** to open DevTools.
 </details>
 
 ---
