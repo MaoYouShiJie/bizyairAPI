@@ -51,6 +51,25 @@ Auto-call API → Real-time progress polling → Show results when done
 
 ---
 
+## 🌐 About BizyAir.cn
+
+[BizyAir.cn](https://bizyair.cn) — **A ready-to-use cloud AI creation space based on ComfyUI**, operated by Beijing SiliconFlow Technology Co., Ltd. It seamlessly connects cloud GPU resources with local ComfyUI, solving the problem of insufficient local computing power. With built-in curated models and nodes, it's ready to use out of the box without complex configuration.
+
+### Main Features
+
+| Feature | Description |
+|---------|-------------|
+| 🤖 **AI Apps** | Ready-to-use ComfyUI-based AI apps (text-to-image, text-to-video, image-to-video, poster generation, etc.) |
+| 🧠 **Model Library** | Latest LoRA and Checkpoint models covering FLUX, LTX-2, WanVideo, Illustrious, and more |
+| 🔧 **Workflow Plaza** | ComfyUI workflows shared by creators worldwide |
+| ⚡ **MCP Servers** | Quick-configure MCP services (Qwen poster generation, Jimeng text-to-image, Wan2.5 image-to-video, etc.) |
+| 🔌 **BizyAirPlus Plugin** | ComfyUI plugin connecting local ComfyUI to cloud GPUs ([GitHub](https://github.com/siliconflow/BizyAirPlus)) |
+| 🌍 **Open Source Community** | Showcase of open-source projects built on the BizyAir API |
+
+> Documentation: [docs.bizyair.cn](https://docs.bizyair.cn)
+
+---
+
 ## ✨ Features
 
 | Feature | Description |

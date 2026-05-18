@@ -51,6 +51,25 @@ BizyAir 提供了丰富的 AI 应用（图像生成、视频生成、音频合�
 
 ---
 
+## 🌐 关于 BizyAir.cn
+
+[BizyAir.cn](https://bizyair.cn) — **基于 ComfyUI 的即开即用云端 AI 创作空间**，由北京硅基流动科技有限公司（SiliconFlow）运营。它将云端 GPU 资源与本地 ComfyUI 无缝连接，解决本地算力不足问题，内置众多精选模型与节点，无需复杂配置，开箱即用。
+
+### 主要功能板块
+
+| 板块 | 说明 |
+|------|------|
+| 🤖 **AI 应用** | 基于 ComfyUI 工作流的即开即用 AI 应用（文生图、文生视频、图生视频、海报生成等） |
+| 🧠 **模型库** | 最新模型 LoRA、Checkpoint，涵盖 FLUX、LTX-2、WanVideo、Illustrious 等 |
+| 🔧 **工作流广场** | 全球创作者分享的 ComfyUI 工作流 |
+| ⚡ **MCP 服务器** | 快速配置即调用的 MCP 服务（千问文生海报、即梦文生图、Wan2.5 图生视频等） |
+| 🔌 **BizyAirPlus 插件** | ComfyUI 插件，连接本地 ComfyUI 到云端 GPU（[GitHub](https://github.com/siliconflow/BizyAirPlus)） |
+| 🌍 **生态社区** | 基于 BizyAir API 二次开发的开源项目展示 |
+
+> 文档中心：[docs.bizyair.cn](https://docs.bizyair.cn)
+
+---
+
 ## ✨ 功能特性
 
 | 特性 | 说明 |
