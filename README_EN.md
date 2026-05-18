@@ -243,6 +243,16 @@ Press **F12** to open DevTools.
 
 ---
 
+## ☕ Donate
+
+If this tool helps you, feel free to scan the QR code below to support the project:
+
+<p align="center">
+  <img src="赞助支付宝二维码.jpg" width="200" alt="Alipay QR Code" />
+</p>
+
+---
+
 ## 📜 License
 
 <p align="center">

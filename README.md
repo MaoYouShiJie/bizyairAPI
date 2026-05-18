@@ -243,6 +243,16 @@ npm run dist:portable   # 便携版（单 exe 文件）
 
 ---
 
+## ☕ 自由赞助
+
+如果这个工具对你有帮助，欢迎，欢迎扫码赞助，支持项目持续维护：
+
+<p align="center">
+  <img src="赞助支付宝二维码.jpg" width="200" alt="支付宝赞助二维码" />
+</p>
+
+---
+
 ## 📜 许可证
 
 <p align="center">
