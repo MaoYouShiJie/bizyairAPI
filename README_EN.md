@@ -20,6 +20,7 @@
   <img src="https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white" alt="Express 4" />
   <img src="https://img.shields.io/badge/Sharp-0.34-99CC00?logo=sharp&logoColor=white" alt="Sharp" />
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" />
+  <a href="#-donate"><img src="https://img.shields.io/badge/☕-Donate-orange" alt="Donate" /></a>
 </p>
 
 ---
@@ -67,6 +68,16 @@ Auto-call API → Real-time progress polling → Show results when done
 | 🌍 **Open Source Community** | Showcase of open-source projects built on the BizyAir API |
 
 > Documentation: [docs.bizyair.cn](https://docs.bizyair.cn)
+
+---
+
+## ☕ Donate
+
+If this tool helps you, feel free to scan the QR code to support the project:
+
+<p align="center">
+  <img src="赞助支付宝二维码.jpg" width="250" alt="Alipay QR Code" />
+</p>
 
 ---
 
@@ -240,16 +251,6 @@ Check that `apikey.json` has valid JSON and `id` values are unique.
 
 Press **F12** to open DevTools.
 </details>
-
----
-
-## ☕ Donate
-
-If this tool helps you, feel free to scan the QR code below to support the project:
-
-<p align="center">
-  <img src="赞助支付宝二维码.jpg" width="200" alt="Alipay QR Code" />
-</p>
 
 ---
 

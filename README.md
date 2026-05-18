@@ -20,6 +20,7 @@
   <img src="https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white" alt="Express 4" />
   <img src="https://img.shields.io/badge/Sharp-0.34-99CC00?logo=sharp&logoColor=white" alt="Sharp" />
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" />
+  <a href="#-赞助"><img src="https://img.shields.io/badge/☕-赞助-orange" alt="Donate" /></a>
 </p>
 
 ---
@@ -67,6 +68,16 @@ BizyAir 提供了丰富的 AI 应用（图像生成、视频生成、音频合�
 | 🌍 **生态社区** | 基于 BizyAir API 二次开发的开源项目展示 |
 
 > 文档中心：[docs.bizyair.cn](https://docs.bizyair.cn)
+
+---
+
+## ☕ 赞助
+
+如果这个工具对你有帮助，欢迎扫码赞助，支持项目持续维护：
+
+<p align="center">
+  <img src="赞助支付宝二维码.jpg" width="250" alt="支付宝赞助二维码" />
+</p>
 
 ---
 
@@ -240,16 +251,6 @@ npm run dist:portable   # 便携版（单 exe 文件）
 
 按 **F12** 打开开发者工具。
 </details>
-
----
-
-## ☕ 自由赞助
-
-如果这个工具对你有帮助，欢迎，欢迎扫码赞助，支持项目持续维护：
-
-<p align="center">
-  <img src="赞助支付宝二维码.jpg" width="200" alt="支付宝赞助二维码" />
-</p>
 
 ---
 
