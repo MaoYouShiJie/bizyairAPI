@@ -141,7 +141,7 @@ bizyairAPI/
 ├── 📘 使用教程/                 # Tutorial screenshots
 ├── 🔑 apikey.json               # API key config (committed, packaged)
 ├── 📋 apps.json                 # App config (committed, packaged)
-├── 🗃️ apps_new.json             # Test app config (gitignored, not packaged)
+├── 🗃️ apps_new.json             # User-added app config (overrides apps.json)
 ├── ⚙️ config.json               # Config file
 ├── 🎨 icons/                    # App icons
 └── 📦 package.json              # Single-root dependencies

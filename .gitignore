@@ -13,7 +13,6 @@ yarn-error.log*
 *.swo
 *~
 .cache/
-apps_new.json
 apikey_new.json
 .thumbcache/
 .gallery-cache.json

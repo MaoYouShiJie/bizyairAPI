@@ -141,7 +141,7 @@ bizyairAPI/
 ├── 📘 使用教程/                 # 教程截图
 ├── 🔑 apikey.json               # API Key 配置（提交 git，打包进 exe）
 ├── 📋 apps.json                 # 应用配置（提交 git，打包进 exe）
-├── 🗃️ apps_new.json             # 测试用应用配置（git 忽略，不打包）
+├── 🗃️ apps_new.json             # 用户新增应用配置（覆盖 apps.json）
 ├── ⚙️ config.json               # 配置文件
 ├── 🎨 icons/                    # 应用图标
 └── 📦 package.json              # 单根依赖

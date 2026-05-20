@@ -1,0 +1,102 @@
+{
+  "apps": [
+    {
+      "id": "app_1778928901365_kupfiqvkr",
+      "name": "QwenEdit2512（2图编辑）",
+      "web_app_id": 43062,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 43062,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"41:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260106/N6UT6EQ0NlYAn7KhTigzeP8YzI5XmLXn.webp\",\n        \"79:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260106/DvPyl2VlXyiyrJpMwHo8YwBezcyYzKqL.jpeg\",\n        \"65:KSampler.seed\": 417986826775873,\n        \"117:Text Multiline.text\": \"将图2的玩偶趴在在图1的后背\",\n        \"118:Text Multiline.text\": \"\",\n        \"119:PrimitiveInt.value\": 1024,\n        \"120:PrimitiveInt.value\": 1024\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-16",
+      "parameterTypeOverrides": {
+        "119:PrimitiveInt.value": {
+          "label": "宽度"
+        },
+        "120:PrimitiveInt.value": {
+          "label": "高度"
+        },
+        "117:Text Multiline.text": {
+          "label": "正面提示词"
+        },
+        "118:Text Multiline.text": {
+          "label": "负面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1778929165286_0ac0uy5yl",
+      "name": "QwenEdit2512（1图）",
+      "web_app_id": 43061,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 43061,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"41:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260106/N6UT6EQ0NlYAn7KhTigzeP8YzI5XmLXn.webp\",\n        \"65:KSampler.seed\": 573653638112838,\n        \"117:Text Multiline.text\": \"将图中白色裙子换成银色的\",\n        \"118:Text Multiline.text\": \"\",\n        \"119:PrimitiveInt.value\": 1024,\n        \"120:PrimitiveInt.value\": 1024\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-16",
+      "parameterTypeOverrides": {
+        "117:Text Multiline.text": {
+          "label": "正面提示词"
+        },
+        "118:Text Multiline.text": {
+          "label": "负面提示词"
+        },
+        "119:PrimitiveInt.value": {
+          "label": "宽度"
+        },
+        "120:PrimitiveInt.value": {
+          "label": "高度"
+        }
+      }
+    },
+    {
+      "id": "app_1778929876213_03yb3g69l",
+      "name": "AIO-V22 图片编辑Qwen-Rapid-AIO-NSFW",
+      "web_app_id": 38990,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 38990,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"78:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260307/SoxiUWuOVRt8TPkVDIgq2oJc9icekm7f.PNG\",\n        \"111:TextEncodeQwenImageEditPlus.prompt\": \"让一个中国女人穿上这件内衣。moweifei,elegant woman,\",\n        \"112:EmptySD3LatentImage.width\": 928,\n        \"112:EmptySD3LatentImage.height\": 1664,\n        \"112:EmptySD3LatentImage.batch_size\": 1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-16",
+      "parameterTypeOverrides": {
+        "111:TextEncodeQwenImageEditPlus.prompt": {
+          "label": "正面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1778929982476_bfnhl7vpi",
+      "name": "Qwen-Rapid-AIO-NSFW-v18二次采样出图",
+      "web_app_id": 41837,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 41837,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"6:CLIPTextEncode.text\": \"Illustrated tutorial with advice for How to let your busty Xenomorph girlfriend know that her job at Hooters is not a good long term career path\",\n        \"4:EmptySD3LatentImage.width\": 720,\n        \"4:EmptySD3LatentImage.height\": 1280,\n        \"4:EmptySD3LatentImage.batch_size\": 1,\n        \"13:LatentUpscaleBy.scale_by\": 1.5\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-16",
+      "parameterTypeOverrides": {
+        "13:LatentUpscaleBy.scale_by": {
+          "label": "缩放倍率"
+        }
+      }
+    },
+    {
+      "id": "app_1778845936866_1abf1utly",
+      "name": "GPT-20.-单图低价版",
+      "web_app_id": 52885,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 52885,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"20:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260515/myPhw9cB3iDteZQ1ahSyNTB85Mq2iz0g.jpg\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.prompt\": \"动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.aspect_ratio\": \"9:16\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.resolution\": \"4k\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-15"
+    },
+    {
+      "id": "app_1779264117895_yibcj5bud",
+      "name": "物体抠除背景",
+      "web_app_id": 50562,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 50562,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"36:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260520/buuzb12pMAKT2UtXI5kW91OE7TT86rVH.jpeg\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-20"
+    }
+  ]
+}
