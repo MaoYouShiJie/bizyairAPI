@@ -973,7 +973,7 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
     
     fs.writeFileSync(filePath, req.file.buffer);
     
-    const url = `/uploads/${fileName}`;
+    const url = `/uploads/${encodeURIComponent(fileName)}`;
     
     res.json({ success: true, url: url, fileName: fileName });
   } catch (err) {
@@ -1104,7 +1104,7 @@ app.post('/api/run-task', async (req, res) => {
   const processedValues = {};
   for (const [key, value] of Object.entries(input_values || {})) {
     if (typeof value === 'string' && value.startsWith('/uploads/')) {
-      const filePath = path.join(dataDir, value);
+      const filePath = path.join(dataDir, decodeURIComponent(value));
       if (fs.existsSync(filePath)) {
         const fileBuffer = fs.readFileSync(filePath);
         const ext = path.extname(filePath).toLowerCase().replace('.', '');
@@ -1304,7 +1304,7 @@ app.post('/api/save-output', async (req, res) => {
       success: true,
       fileName,
       filePath,
-      url: `/输出/${appName}/${today}/${fileName}`,
+      url: `/输出/${encodeURIComponent(appName)}/${today}/${encodeURIComponent(fileName)}`,
       relativePath: path.join('输出', appName, today, fileName)
     });
   } catch (err) {
@@ -1368,7 +1368,7 @@ app.post('/api/save-outputs', async (req, res) => {
           timeout: 60000
         });
         fs.writeFileSync(filePath, Buffer.from(response.data));
-        results.push({ success: true, fileName, filePath, url: `/输出/${appName}/${today}/${fileName}` });
+        results.push({ success: true, fileName, filePath, url: `/输出/${encodeURIComponent(appName)}/${today}/${encodeURIComponent(fileName)}` });
         console.log(`[保存] ${filePath}`);
       } catch (downloadErr) {
         results.push({ success: false, error: downloadErr.message, url: object_url });
@@ -1549,7 +1549,7 @@ app.get('/api/gallery', async (req, res) => {
             
             files.push({
               name: item.name,
-              path: `/输出/${relativePath}`,
+              path: `/输出/${relativePath.split('/').map(encodeURIComponent).join('/')}`,
               app: currentApp || '未分类',
               date: currentDate || '未知日期',
               size: stat.size,
@@ -1705,7 +1705,7 @@ app.get('/api/gallery/folders', async (req, res) => {
               const stat = fs.statSync(subPath);
               // 构建相对路径
               const relativePath = path.relative(outputDir, subPath).replace(/\\/g, '/');
-              const url = `/输出/${relativePath}`;
+              const url = `/输出/${relativePath.split('/').map(encodeURIComponent).join('/')}`;
               // cover 优先选择图片，其次视频，最后才是文本/音频
               if (!cover || (mediaType === 'image' && coverType !== 'image')) {
                 cover = url;
@@ -1823,7 +1823,7 @@ app.get('/api/gallery/folder/:name', async (req, res) => {
             const relativePath = path.relative(outputDir, fullPath).replace(/\\/g, '/');
             const fileObj = {
               name: item.name,
-              path: `/输出/${relativePath}`,
+              path: `/输出/${relativePath.split('/').map(encodeURIComponent).join('/')}`,
               date: currentDate || '未知日期',
               size: stat.size,
               mtime: stat.mtime,
