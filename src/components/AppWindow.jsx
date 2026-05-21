@@ -546,8 +546,9 @@ function OutputItem({ item, index, appName, onSave, onDelete, onView }) {
 
   // 获取文本文件内容
   React.useEffect(() => {
-    if (isTextFile && item.object_url && !textContent && !textLoading) {
+    if (isTextFile && item.object_url && !textLoading) {
       setTextLoading(true)
+      setTextContent(null)
       fetch(item.object_url)
         .then(r => r.text())
         .then(text => {
