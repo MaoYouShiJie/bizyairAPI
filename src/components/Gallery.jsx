@@ -20,6 +20,34 @@ function getMediaType(file) {
   return 'image'
 }
 
+// 文本文件便利贴卡片（用于文件夹内列表）
+const TextFileCard = React.memo(({ file }) => {
+  const [preview, setPreview] = useState('')
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    fetch(file.path)
+      .then(r => r.text())
+      .then(text => {
+        const snippet = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').substring(0, 200)
+        setPreview(snippet + (text.length > 200 ? '...' : ''))
+        setLoaded(true)
+      })
+      .catch(() => { setPreview('?'); setLoaded(true) })
+  }, [file.path])
+  return (
+    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative overflow-hidden">
+      <svg className="w-4 h-4 text-yellow-600/60 mb-1 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
+      </svg>
+      {loaded ? (
+        <p className="text-xs text-yellow-900 leading-relaxed break-all overflow-y-auto flex-1">{preview}</p>
+      ) : (
+        <div className="text-xs text-yellow-700/50 animate-pulse">...</div>
+      )}
+    </div>
+  )
+})
+
 // 文本文件查看器组件
 function TextFileViewer({ filePath, fileName }) {
   const [content, setContent] = useState(null)
@@ -57,22 +85,21 @@ function TextFileViewer({ filePath, fileName }) {
   const ext = (fileName || '').split('.').pop().toUpperCase()
 
   return (
-    <div className="flex flex-col w-full max-w-2xl max-h-[80vh] bg-slate-800/90 rounded-xl border border-white/10 overflow-hidden" onClick={(e) => e.stopPropagation()}>
-      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/80 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
+    <div className="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl shadow-lg overflow-hidden max-w-2xl w-full max-h-[80vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center justify-between px-4 py-3 bg-yellow-400/30 border-b border-yellow-500/20">
+        <div className="flex items-center gap-2 min-w-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-700 shrink-0">
+            <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
           </svg>
-          <span className="text-white text-sm font-medium">{fileName}</span>
-          <span className="text-slate-500 text-xs">{ext}</span>
+          <span className="text-yellow-900 text-sm font-medium truncate">{fileName}</span>
+          <span className="text-yellow-700/60 text-xs shrink-0">{ext}</span>
         </div>
         <button
           onClick={handleCopy}
-          className="text-xs px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-300 transition flex items-center gap-1"
+          className="text-xs px-3 py-1.5 rounded-lg bg-yellow-500/40 hover:bg-yellow-500/60 text-yellow-900 transition flex items-center gap-1.5 shrink-0 font-medium"
         >
           {copied ? (
-            <><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg> 已复制</>
+            <><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg> 已复制</>
           ) : (
             <><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制</>
           )}
@@ -80,9 +107,9 @@ function TextFileViewer({ filePath, fileName }) {
       </div>
       <div className="flex-1 overflow-auto p-4">
         {loading ? (
-          <div className="text-slate-400 text-sm animate-pulse">加载中...</div>
+          <div className="text-yellow-700/50 text-sm animate-pulse">加载中...</div>
         ) : (
-          <pre className="text-sm text-slate-200 whitespace-pre-wrap break-words leading-relaxed font-mono">{content}</pre>
+          <pre className="text-sm text-yellow-900 whitespace-pre-wrap break-words leading-relaxed font-mono">{content}</pre>
         )}
       </div>
     </div>
@@ -154,15 +181,7 @@ const MediaThumb = React.memo(({ file, index, onClick }) => {
           <div className="w-full h-full bg-slate-700" />
         )
       ) : mediaType === 'text' ? (
-        <div className="absolute inset-0 bg-slate-700/80 flex flex-col items-center justify-center gap-1.5 group-hover:bg-slate-600/80 transition">
-          <svg className="w-10 h-10 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-          </svg>
-          <span className="text-white/70 text-xs font-medium">{file.name.split('.').pop().toUpperCase()}</span>
-        </div>
+        inView ? <TextFileCard file={file} /> : <div className="w-full h-full bg-yellow-300/60" />
       ) : (
         <div className="absolute inset-0 bg-slate-700 flex flex-col items-center justify-center gap-2 group-hover:bg-slate-600 transition">
           <svg className="w-10 h-10 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -174,7 +193,7 @@ const MediaThumb = React.memo(({ file, index, onClick }) => {
         </div>
       )}
       {/* 悬停类型指示 */}
-      {(mediaType === 'video' || mediaType === 'text') && (
+      {mediaType === 'video' && (
         <div className="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/70 rounded text-white text-xs">{file.name.split('.').pop().toUpperCase()}</div>
       )}
     </div>
@@ -1146,10 +1165,9 @@ export default function Gallery({ onClose }) {
                       </div>
                     </>
                   ) : mediaType === 'text' ? (
-                    <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
+                    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-yellow-700" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
                       </svg>
                     </div>
                   ) : (
