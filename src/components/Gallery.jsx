@@ -634,7 +634,7 @@ export default function Gallery({ onClose }) {
         .catch(() => { setPreview('?'); setLoading(false) })
     }, [url])
     return (
-      <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative overflow-hidden">
+    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
         <svg className="w-4 h-4 text-yellow-600/60 mb-1 shrink-0" viewBox="0 0 24 24" fill="currentColor">
           <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
         </svg>
