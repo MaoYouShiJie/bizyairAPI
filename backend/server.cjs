@@ -1602,7 +1602,8 @@ app.delete('/api/gallery', async (req, res) => {
     
     // 安全检查：只允许删除输出目录下的文件
     const outputDir = saveDir;
-    const fullPath = path.join(outputDir, file_path.replace(/^\/输出\//, ''));
+    const relativePath = file_path.replace(/^\/输出\//, '').split('/').map(decodeURIComponent).join('/');
+    const fullPath = path.join(outputDir, relativePath);
     
     if (!fullPath.startsWith(outputDir)) {
       return res.status(403).json({ error: '无权删除此文件' });
