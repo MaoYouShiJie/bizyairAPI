@@ -443,6 +443,7 @@ export default function Gallery({ onClose }) {
   const goBack = () => {
     setCurrentFolder(null)
     setViewerIndex(null)
+    loadFolders()
   }
 
   // 重新居中当前图片（用于重置按钮/按0键）
@@ -479,6 +480,9 @@ export default function Gallery({ onClose }) {
       await axios.delete('/api/gallery', { data: { file_path: filePath } })
       setFiles(files.filter(f => f.path !== filePath))
       if (viewerIndex !== null) setViewerIndex(null)
+      if (currentFolder) delete folderCacheRef.current[currentFolder]
+      foldersLoadedRef.current = false
+      if (currentFolder) loadFolderContent(currentFolder)
     } catch (err) {
       alert('删除失败: ' + err.message)
     }
