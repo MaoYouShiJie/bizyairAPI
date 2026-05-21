@@ -603,7 +603,7 @@ function OutputItem({ item, index, appName, onSave, onDelete, onView }) {
       onMouseLeave={() => setShowActions(false)}
     >
       {item.object_url && isVideo && (
-        <video src={item.object_url} controls className="w-full" />
+        <video src={item.object_url} controls className="w-full object-contain" style={{ maxHeight: '60vh' }} />
       )}
       {item.object_url && isAudio && (
         <div className="bg-slate-800 p-4 flex flex-col items-center gap-3">
