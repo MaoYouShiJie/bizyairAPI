@@ -1,6 +1,6 @@
 {
   "name": "bizyair-api-tool",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "BizyAir API 工具",
   "type": "module",
   "main": "electron/main.cjs",
