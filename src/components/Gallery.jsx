@@ -35,12 +35,12 @@ const TextFileCard = React.memo(({ file }) => {
       .catch(() => { setPreview('?'); setLoaded(true) })
   }, [file.path])
   return (
-    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative overflow-hidden">
+    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col group-hover:scale-105 transition-transform duration-200 rounded-lg shadow-sm ring-1 ring-yellow-500/10">
       <svg className="w-4 h-4 text-yellow-600/60 mb-1 shrink-0" viewBox="0 0 24 24" fill="currentColor">
         <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
       </svg>
       {loaded ? (
-        <p className="text-xs text-yellow-900 leading-relaxed break-all overflow-y-auto flex-1">{preview}</p>
+        <p className="text-xs text-yellow-900 leading-relaxed break-all overflow-hidden flex-1">{preview}</p>
       ) : (
         <div className="text-xs text-yellow-700/50 animate-pulse">...</div>
       )}
@@ -181,7 +181,7 @@ const MediaThumb = React.memo(({ file, index, onClick }) => {
           <div className="w-full h-full bg-slate-700" />
         )
       ) : mediaType === 'text' ? (
-        inView ? <TextFileCard file={file} /> : <div className="w-full h-full bg-yellow-300/60" />
+        inView ? <div className="absolute inset-0 p-3"><TextFileCard file={file} /></div> : <div className="w-full h-full bg-yellow-300/60" />
       ) : (
         <div className="absolute inset-0 bg-slate-700 flex flex-col items-center justify-center gap-2 group-hover:bg-slate-600 transition">
           <svg className="w-10 h-10 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -633,15 +633,15 @@ export default function Gallery({ onClose }) {
         })
         .catch(() => { setPreview('?'); setLoading(false) })
     }, [url])
-    return (
-    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative group-hover:scale-105 transition-transform duration-200 rounded-lg shadow-sm ring-1 ring-yellow-500/10">
-        <svg className="w-4 h-4 text-yellow-600/60 mb-1 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
-        </svg>
+  return (
+    <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-400 p-2 flex flex-col relative overflow-hidden rounded-lg shadow-sm ring-1 ring-yellow-500/10">
+      <svg className="w-4 h-4 text-yellow-600/60 mb-1 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H9v-2h6v2zm0-4H9v-2h6v2zm0-4H9V8h6v4z"/>
+      </svg>
         {loading ? (
           <div className="text-xs text-yellow-700/50 animate-pulse">...</div>
         ) : (
-          <p className="text-xs text-yellow-900 leading-relaxed break-all overflow-y-auto flex-1">{preview}</p>
+        <p className="text-xs text-yellow-900 leading-relaxed break-all overflow-hidden flex-1">{preview}</p>
         )}
       </div>
     )
@@ -683,7 +683,7 @@ export default function Gallery({ onClose }) {
 
     return (
       <div
-        className="relative w-full aspect-[9/16] cursor-pointer transition-all duration-200 hover:scale-[1.04]"
+        className="relative w-full aspect-[9/14] cursor-pointer transition-all duration-200 hover:scale-[1.04]"
         onClick={() => loadFolderContent(folder.name)}
         onMouseEnter={() => setGlow(true)}
         onMouseLeave={() => setGlow(false)}

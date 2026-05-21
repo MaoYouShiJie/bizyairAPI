@@ -2,10 +2,10 @@
   "iconSize": "medium",
   "sortBy": "name",
   "sortOrder": "asc",
-  "backgroundImage": "/backgrounds/backgrounds.jpg",
+  "backgroundImage": "/backgrounds/ComfyUI_00001_jnxyu_1765852714.png",
   "backgroundSize": "cover",
   "desktopOpacity": 100,
-  "autoSwitch": true,
+  "autoSwitch": false,
   "autoSwitchIndex": 2,
   "appOrder": null
 }

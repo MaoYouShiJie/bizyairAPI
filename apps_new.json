@@ -86,7 +86,37 @@
       "iconBgColor": "#6366f1",
       "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 52885,\n      \"suppress_preview_output\": false,\n      \"input_values\": {\n        \"20:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260515/myPhw9cB3iDteZQ1ahSyNTB85Mq2iz0g.jpg\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.prompt\": \"动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.aspect_ratio\": \"9:16\",\n        \"19:BizyAir_GPT_IMAGE_2_I2I_API.resolution\": \"4k\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
       "isDefault": false,
-      "createdAt": "2026-05-15"
+      "createdAt": "2026-05-15",
+      "parameterTypeOverrides": {
+        "19:BizyAir_GPT_IMAGE_2_I2I_API.aspect_ratio": {
+          "type": "select",
+          "options": [
+            "9:16",
+            "16:9",
+            "1:1",
+            "2:3",
+            "3:2",
+            "4:5",
+            "5:4",
+            "3:4",
+            "4:3",
+            "21:9"
+          ],
+          "label": "图像比例"
+        },
+        "19:BizyAir_GPT_IMAGE_2_I2I_API.resolution": {
+          "type": "select",
+          "options": [
+            "4k",
+            "2k",
+            "1k"
+          ],
+          "label": "分辨率"
+        },
+        "19:BizyAir_GPT_IMAGE_2_I2I_API.prompt": {
+          "label": "正面提示词"
+        }
+      }
     },
     {
       "id": "app_1779264117895_yibcj5bud",
@@ -97,6 +127,350 @@
       "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 50562,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"36:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260520/buuzb12pMAKT2UtXI5kW91OE7TT86rVH.jpeg\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
       "isDefault": false,
       "createdAt": "2026-05-20"
+    },
+    {
+      "id": "app_1779330596617_0n2kdvaud",
+      "name": "短剧角色卡G-2.0",
+      "web_app_id": 54128,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 54128,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"17:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260515/7rhaZMnyQadjvScoNFHquuyQJmJto8o5.png\",\n        \"21:MuyeTextEditOutput.编辑文本\": \"沈青辞，侯爵嫡女，精通诗词，19岁，真人画风 \"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21",
+      "parameterTypeOverrides": {
+        "21:MuyeTextEditOutput.编辑文本": {
+          "label": "正面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891574_7qcy1p5os",
+      "name": "超高清材质保留换装",
+      "web_app_id": 45211,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45211,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"337:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260128/t4StJJPdnEVkK0xbG0e1ia6BOVdl115P.png\",\r\n    \"378:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260128/gZPSOQUyEuEwYzieh03dmbfFuPSL04HY.jpg\",\r\n    \"364:LayerUtility: ImageScaleByAspectRatio V2.scale_to_length\": 2048\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "364:LayerUtility: ImageScaleByAspectRatio V2.scale_to_length": {
+          "label": "长边长度"
+        }
+      }
+    },
+    {
+      "id": "app_1778833347522_2zgkj0maf",
+      "name": "动作迁移加速版人物一致性视频",
+      "web_app_id": 48972,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 48972,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"52:VHS_LoadVideo.video\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260318/tesunobuQ1AniJUFffH7BX7ywOgzxYzd.mp4\",\n        \"167:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260318/utsnDG0MenaAkx0s0vjajRB5f2Wv42nn.png\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-15",
+      "parameterTypeOverrides": {
+        "52:VHS_LoadVideo.video": {
+          "label": "输入视频"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891573_9rp8jqvyi",
+      "name": "换脸Flux2Klein双图编辑",
+      "web_app_id": 46874,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 46874,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"99:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/hk6NBx4W2A2wVFH5wOnFh5MHPwvny5OK.png\",\r\n    \"98:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260224/KR4bIQ9DDl04o7ifEVUET0qZfhC8QYWm.webp\",\r\n    \"100:CR Text.text\": \"参照图像1和图像2，图像1人物换上图像2的头和脸，保持图像1人物保持一致性\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "100:CR Text.text": {
+          "label": "正面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891578_uewqf0k8w",
+      "name": "首尾帧1280高清Wan2.2_Remix_NSFW",
+      "web_app_id": 44750,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 44750,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"52:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260122/ictdTmMPduPyy1gWxfyYHyVuDF3JyjvM.png\",\r\n    \"53:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260122/isbhW50waP4N3smpSDWTiP4xXaBAVdOa.png\",\r\n    \"26:JWInteger.value\": 81,\r\n    \"30:WanVideoTextEncode.positive_prompt\": \"\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "26:JWInteger.value": {
+          "label": "总帧数"
+        },
+        "52:LoadImage.image": {
+          "label": "首帧图像"
+        },
+        "53:LoadImage.image": {
+          "label": "尾帧图像"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891570_uwrt7t311",
+      "name": "Flux2_Klein_动漫转真人",
+      "web_app_id": 52559,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\n  -d '{\n  \"web_app_id\": 52559,\n  \"suppress_preview_output\": false,\n  \"input_values\": {\n    \"76:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260425/aQnu9IEkrZZOZJfyvXnAkuy2AOU3fN4F.png\",\n    \"117:CR Text.text\": \"动漫转写实真人，保持人物一致性,保持人物情绪和表情与原图一致,保持人物五官一致,\",\n    \"155:CustomCombo.choice\": \"Flux2_Klein_官方\", \n    \"106:EmptyFlux2LatentImage.batch_size\": 1,\n    \"109:Flux2Scheduler.steps\": 10\n  }\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "117:CR Text.text": {
+          "label": "正面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891579_wy2s3t4u0",
+      "name": "LTX2.3文or图 生视频",
+      "web_app_id": 48214,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 48214,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"173:CLIPTextEncode.text\": \"一个性感的女人在跳魅惑的舞,她发出轻微的\\\"嗯~\\\" \\\"哼~\\\"的声音.\",\r\n    \"208:PrimitiveBoolean.value\": true,\r\n    \"206:LoadImage.image\": \"https://storage.bizyair.cn/inputs/20260311/Kn57707AHPRvESxqBk6BWMVZKpzmJBq8.png\",\r\n    \"192:EmptyImage.width\": 720,\r\n    \"192:EmptyImage.height\": 1280,\r\n    \"192:EmptyImage.batch_size\": 1,\r\n    \"254:INTConstant.value\": 169,\r\n    \"182:PrimitiveInt.value\": 24,\r\n    \"185:KSamplerSelect.sampler_name\": \"euler_ancestral\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "185:KSamplerSelect.sampler_name": {
+          "type": "select",
+          "options": [
+            "euler_ancestral",
+            "euler"
+          ]
+        }
+      }
+    },
+    {
+      "id": "app_1774611891575_9s6nua564",
+      "name": "Qwen Image 2512 文生图",
+      "web_app_id": 48845,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 48845,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"84:CLIPTextEncode.text\": \"高达风格的机械拼装玩具，螳螂，3D渲染，工业风，有灯光，纯灰色背景\",\r\n    \"80:CLIPTextEncode.text\": \"色调艳丽，过曝，静态，细节模糊不清，风格，作品，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，杂乱的背景，三条腿，\",\r\n    \"81:EmptySD3LatentImage.width\": 1280,\r\n    \"81:EmptySD3LatentImage.height\": 1280\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "80:CLIPTextEncode.text": {
+          "label": "负面提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1774611891580_na2omp362",
+      "name": "Qwen3-TTS 设计音色制作",
+      "web_app_id": 45577,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 45577,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"38:FB_Qwen3TTSVoiceDesign.text\": \"有些事，只要国家需要，就得有人扛起来。\\n我们那一代人，是背着泥土铺路的；\\n你们要做的，是让这条路，通向星辰大海。\",\r\n    \"38:FB_Qwen3TTSVoiceDesign.instruct\": \"角色姓名：林怀岳\\n音色信息：音量洪亮，音域低沉，力度感强的中年男性声音。\\n身份背景：某国家重点科研项目首席顾问，年近七十的资深战略科学家。曾参与国家重大科技攻关工程，历经数十年风雨，见证了从落后追赶到自主创新的艰难历程。现任国家科技咨询委员会终身荣誉委员，仍坚持在一线培养青年人才，为国家战略发展建言献策。\\n外貌特征：身形挺拔，两鬓斑白，眉宇间刻着岁月沉淀的坚毅。常着深色中山装或简洁正装，眼神沉静而锐利，举手投足间自带威严与从容。\\n性格特质：意志如钢，信念坚定，面对挑战从不退缩；胸怀家国，心系民族未来，将个人命运与国家兴衰紧密相连；严谨自律，言出必行，话语中充满责任感与历史担当；外冷内热，表面严肃，实则对后辈寄予厚望，甘为人梯。\\n人生信条：“我们这一代人，不是为了站在光里，而是为了把路铺到光里。”\",\r\n    \"38:FB_Qwen3TTSVoiceDesign.language\": \"Chinese\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "38:FB_Qwen3TTSVoiceDesign.language": {
+          "type": "select",
+          "options": [
+            "Chinese",
+            "English",
+            "Japanese",
+            "Korean",
+            "French",
+            "German",
+            "Spanish",
+            "Portuguese",
+            "Russian",
+            "Italian"
+          ]
+        }
+      }
+    },
+    {
+      "id": "app_1774611891577_s9wipo1ch",
+      "name": "smoothMixWan22图生视频",
+      "web_app_id": 44124,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 44124,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"52:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260115/24brLflyrPErfGiUa0HrExejaCvhnJGF.png\",\r\n    \"142:INTConstant.value\": 5,\r\n    \"151:PrimitiveStringMultiline.value\": \"a slow dolly-in begins at 50mm, f/2.2, framing the subject's face in a medium close-up as her eyes—those piercing, electric-blue irises—gently shift focus from the viewer to a point just beyond the frame's edge, suggesting an internal reckoning. The camera glides forward with a whisper of resistance, mirroring the subtle tension in her jawline, while a single, cool LED light source from the upper left casts sharp highlights along her silver bangs and the collar of her dark uniform, rendering the fabric's crisp white stripes with high-contrast texture. Behind her, a deep crimson ribbon tied in a loose bow at her shoulder catches the ambient glow, its saturated hue bleeding into the cool shadows of the environment. The air is still, thick with the scent of ozone and old paper, and a faint, rhythmic ticking from unseen machinery pulses beneath the silence. *\",\r\n    \"149:INTConstant.value\": 480,\r\n    \"150:INTConstant.value\": 720,\r\n    \"147:Float.Number\": \"16\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "142:INTConstant.value": {
+          "label": "时长 (秒)"
+        },
+        "151:PrimitiveStringMultiline.value": {
+          "label": "正面提示词"
+        },
+        "149:INTConstant.value": {
+          "label": "宽度"
+        },
+        "150:INTConstant.value": {
+          "label": "高度"
+        },
+        "147:Float.Number": {
+          "label": "帧率"
+        }
+      }
+    },
+    {
+      "id": "app_1779332930594_tpfzl6w3b",
+      "name": "Z-image 图生图（洗图）",
+      "web_app_id": 53636,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 53636,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"92:CR Text.text\": \"一位韩国美女\",\n        \"103:Float.Number\": \"0.7\",\n        \"88:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260129/mU8joQHGN6gMaQEWbkhc4rIjSdIi39J9.webp\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21",
+      "parameterTypeOverrides": {
+        "103:Float.Number": {
+          "label": "重绘幅度"
+        },
+        "92:CR Text.text": {
+          "label": "提示词 (作用小)"
+        }
+      }
+    },
+    {
+      "id": "app_1779338800515_kyunsu6tu",
+      "name": "VEO3.1-单图生视频",
+      "web_app_id": 51989,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 51989,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"549:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260521/N8SMHLByFLIV1b0EBjEgTGSKPacYdyHB.png\",\n        \"548:BizyAir_Veo_V3_1_I2V_API.prompt\": \"模特在慢摇跳舞，然后慢慢随着节奏转身\",\n        \"548:BizyAir_Veo_V3_1_I2V_API.model\": \"veo3.1-fast\",\n        \"548:BizyAir_Veo_V3_1_I2V_API.aspect_ratio\": \"9:16\",\n        \"548:BizyAir_Veo_V3_1_I2V_API.resolution\": \"1080p\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21",
+      "parameterTypeOverrides": {
+        "548:BizyAir_Veo_V3_1_I2V_API.aspect_ratio": {
+          "type": "select",
+          "options": [
+            "9:16",
+            "16:9"
+          ],
+          "label": "比例"
+        },
+        "548:BizyAir_Veo_V3_1_I2V_API.resolution": {
+          "type": "select",
+          "options": [
+            "1080p",
+            "4k",
+            "720p"
+          ],
+          "label": "分辨率"
+        },
+        "548:BizyAir_Veo_V3_1_I2V_API.prompt": {
+          "label": "提示词"
+        },
+        "548:BizyAir_Veo_V3_1_I2V_API.model": {
+          "type": "select",
+          "options": [
+            "veo3.1-fast",
+            "veo3.1-pro"
+          ],
+          "label": "模型"
+        }
+      }
+    },
+    {
+      "id": "app_1779339155586_t93j23458",
+      "name": "Grok 图生视频",
+      "web_app_id": 54346,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 54346,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"1:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260521/N8SMHLByFLIV1b0EBjEgTGSKPacYdyHB.png\",\n        \"2:BizyAir_Grok_Imagine_Video_Third_Party_API.prompt\": \"模特在慢摇跳舞，然后慢慢随着节奏转身。\",\n        \"2:BizyAir_Grok_Imagine_Video_Third_Party_API.model\": \"grok-imagine-video\",\n        \"2:BizyAir_Grok_Imagine_Video_Third_Party_API.duration\": 6,\n        \"2:BizyAir_Grok_Imagine_Video_Third_Party_API.aspect_ratio\": \"9:16\",\n        \"2:BizyAir_Grok_Imagine_Video_Third_Party_API.resolution\": \"720p\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21",
+      "parameterTypeOverrides": {
+        "2:BizyAir_Grok_Imagine_Video_Third_Party_API.model": {
+          "type": "select",
+          "options": [
+            "grok-imagine-video"
+          ],
+          "label": "模型"
+        },
+        "2:BizyAir_Grok_Imagine_Video_Third_Party_API.aspect_ratio": {
+          "type": "select",
+          "options": [
+            "9:16",
+            "16:9",
+            "1:1",
+            "2:3",
+            "3:2"
+          ],
+          "label": "比例"
+        },
+        "2:BizyAir_Grok_Imagine_Video_Third_Party_API.prompt": {
+          "label": "提示词"
+        },
+        "2:BizyAir_Grok_Imagine_Video_Third_Party_API.duration": {
+          "label": "时长"
+        },
+        "2:BizyAir_Grok_Imagine_Video_Third_Party_API.resolution": {
+          "type": "select",
+          "options": [
+            "720p",
+            "480P"
+          ],
+          "label": "分辨率"
+        }
+      }
+    },
+    {
+      "id": "app_1778840277995_0ka74stbv",
+      "name": "Joy_Caption3 反推提示词",
+      "web_app_id": 49552,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 49552,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"18:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260311/s4CCGVhxNmitxnZcD7oC0v72ptrYkV8t.png\",\r\n    \"21:BizyAirJoyCaption3.extra_options\": \"\",\r\n    \"21:BizyAirJoyCaption3.custom_prompt\": \"\"\r\n  }\r\n}'",
+      "isDefault": true,
+      "createdAt": "2026-03-27",
+      "parameterTypeOverrides": {
+        "21:BizyAirJoyCaption3.extra_options": {
+          "label": "身份提示词"
+        },
+        "21:BizyAirJoyCaption3.custom_prompt": {
+          "label": "用户提示词"
+        }
+      }
+    },
+    {
+      "id": "app_1779349644761_w3c8f0yfa",
+      "name": "Flux-2-Klein-文生图",
+      "web_app_id": 44324,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 44324,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"76:PrimitiveStringMultiline.value\": \"一个亚洲美女穿着泳装站在海边，特写镜头，微微一笑。\\n\",\n        \"84:PrimitiveInt.value\": 1080,\n        \"85:PrimitiveInt.value\": 1920,\n        \"83:EmptyFlux2LatentImage.batch_size\": 1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21"
+    },
+    {
+      "id": "app_1779349704007_rsxjy9qbb",
+      "name": "flux-dev-HighRes 文生图",
+      "web_app_id": 40612,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 40612,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"6:CLIPTextEncode.text\": \"feifei, facing the camera, photorealistic, half-body portrait, photo of a young woman taken from a portrait camera angle, \\na realistic retro Hong Kong portrait with a pure 1990s movie look. Half-length portrait. The character leans against a wall covered with newspapers, with a gentle and melancholic gaze. Typical 1990s street style. Dewy skin.\",\n        \"5:EmptyLatentImage.width\": 1080,\n        \"5:EmptyLatentImage.height\": 1920,\n        \"5:EmptyLatentImage.batch_size\": 1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21"
+    },
+    {
+      "id": "app_1779349761547_r4j577mwq",
+      "name": "Flux2dev_图生图",
+      "web_app_id": 39877,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 39877,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"46:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20251128/LSebP1t2egYICsBfeX2np3TnXY3LTRAD.png\",\n        \"6:CLIPTextEncode.text\": \"make the girl in the image sleeping on the cloud with butterflys\",\n        \"47:EmptyFlux2LatentImage.width\": 1080,\n        \"47:EmptyFlux2LatentImage.height\": 1920,\n        \"47:EmptyFlux2LatentImage.batch_size\": 1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21"
+    },
+    {
+      "id": "app_1779349872764_3yt562isu",
+      "name": "flux2版-批量洗图",
+      "web_app_id": 48983,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 48983,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"270:LoadImage.image\": \"https://storage.bizyair.cn/inputs/20260320/GxFKIw3v5yI1bj7ToP7e2z2OeqQYmBTi.png\",\n        \"281:CR Text.text\": \"8k，4k，暖色调（真实滤镜），凄美光影\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-05-21"
     }
   ]
 }

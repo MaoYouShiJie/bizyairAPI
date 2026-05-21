@@ -86,7 +86,7 @@ ipcMain.handle('select-folder', async () => {
 });
 
 // ── 生产模式：Electron 内置 HTTP 服务器（代理后端+静态前端）──
-function startElectronServer(up) {
+function startElectronServer(up, backendPort) {
   return new Promise((resolve) => {
     const distDir = path.join(__dirname, '..', 'dist');
     const uploadsDir = path.join(up, 'uploads');
@@ -100,10 +100,10 @@ function startElectronServer(up) {
       if (url.startsWith('/api') || url.startsWith('/%E8%BE%93%E5%87%BA') || url.startsWith('/输出')) {
         const options = {
           hostname: 'localhost',
-          port: 3003,
+          port: backendPort,
           path: req.url,
           method: req.method,
-          headers: { ...req.headers, host: 'localhost:3003' },
+          headers: { ...req.headers, host: `localhost:${backendPort}` },
         };
         const proxyReq = http.request(options, (proxyRes) => {
           res.writeHead(proxyRes.statusCode, proxyRes.headers);
@@ -266,10 +266,9 @@ app.whenReady().then(async () => {
     console.log('Loading backend from:', backendPath);
     const mod = require(backendPath);
     const startServer = mod.startServer || mod;
-    startServer({ userDataPath });
+    const { port: backendPort } = await startServer({ userDataPath });
 
-    await new Promise(r => setTimeout(r, 2000));
-    await startElectronServer(userDataPath);
+    await startElectronServer(userDataPath, backendPort);
     createWindow();
 
     // F12 打开 DevTools（开发/打包版均有效）

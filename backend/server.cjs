@@ -40,43 +40,56 @@ function reloadDataDirPaths() {
 }
 
 function startServer(options = {}) {
-  if (options.userDataPath) dataDir = options.userDataPath;
-  const port = options.port || PORT;
+  return new Promise((resolve) => {
+    if (options.userDataPath) dataDir = options.userDataPath;
+    const startPort = options.port || PORT;
 
-  reloadDataDirPaths();
+    reloadDataDirPaths();
 
-  // 确保用户数据目录存在
-  const userDirs = [
-    saveDir, path.join(dataDir, 'uploads'),
-    THUMB_DIR, path.join(dataDir, 'backgrounds'),
-  ];
-  userDirs.forEach(dir => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    // 确保用户数据目录存在
+    const userDirs = [
+      saveDir, path.join(dataDir, 'uploads'),
+      THUMB_DIR, path.join(dataDir, 'backgrounds'),
+    ];
+    userDirs.forEach(dir => {
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    });
+
+    // 动态注册背景图和上传文件静态服务（使用 dataDir）
+    app.use('/backgrounds', express.static(path.join(dataDir, 'backgrounds')));
+    app.use('/uploads', express.static(path.join(dataDir, 'uploads')));
+
+    function tryListen(port) {
+      const server = app.listen(port, () => {
+        console.log(`Backend server running on port ${port}`);
+        console.log(`Data directory: ${dataDir}`);
+        // 确保缓存和监听使用正确的 dataDir
+        loadCache();
+        if (fs.existsSync(watchDir)) {
+          setupWatcher();
+        }
+        resolve({ port, server });
+      });
+      server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          console.log(`Port ${port} in use, trying ${port + 1}`);
+          server.close();
+          tryListen(port + 1);
+        } else {
+          console.error('Server error:', err);
+          resolve({ port: 0, server: null });
+        }
+      });
+    }
+    tryListen(startPort);
   });
-
-  // 动态注册背景图和上传文件静态服务（使用 dataDir）
-  app.use('/backgrounds', express.static(path.join(dataDir, 'backgrounds')));
-  app.use('/uploads', express.static(path.join(dataDir, 'uploads')));
-
-  const server = app.listen(port, () => {
-    console.log(`Backend server running on port ${port}`);
-    console.log(`Data directory: ${dataDir}`);
-  });
-
-  // 确保缓存和监听使用正确的 dataDir
-  loadCache();
-  if (fs.existsSync(watchDir)) {
-    setupWatcher();
-  }
-
-  return server;
 }
 
 // 自动启动：当直接 node server.js 运行时
 // （Electron 打包版由 main.cjs 的 startServer() 启动，dev 模式由 startDev() spawn 启动）
 if (require.main === module && !process.env.ELECTRON_PROD) {
   console.log('Starting backend directly via node server.js');
-  startServer();
+  startServer().then(({ port }) => console.log(`Backend started on port ${port}`));
 }
 
 module.exports = { startServer };
