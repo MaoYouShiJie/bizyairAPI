@@ -72,7 +72,7 @@
           ]
         }
       ],
-      "artifactName": "BizyAir API 工具-${version}.${ext}"
+      "artifactName": "BizyAir应用API-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,

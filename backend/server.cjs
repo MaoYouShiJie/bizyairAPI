@@ -1793,6 +1793,67 @@ app.get('/api/gallery/folders', async (req, res) => {
   }
 });
 
+// 获取日期子文件夹列表（模型文件夹下的日期子目录）
+app.get('/api/gallery/subfolders/:name', async (req, res) => {
+  try {
+    const folderName = decodeURIComponent(req.params.name);
+    const outputDir = saveDir;
+    const folderPath = path.join(outputDir, folderName);
+
+    if (!fs.existsSync(folderPath)) {
+      return res.json({ folders: [] });
+    }
+
+    const subfolders = [];
+    const items = fs.readdirSync(folderPath, { withFileTypes: true });
+
+    for (const item of items) {
+      if (!item.isDirectory() || item.name.startsWith('.')) continue;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(item.name)) continue;
+
+      const datePath = path.join(folderPath, item.name);
+      let count = 0;
+      let cover = null;
+      let coverType = null;
+      const allCovers = [];
+
+      const dateFiles = fs.readdirSync(datePath, { withFileTypes: true });
+      for (const file of dateFiles) {
+        if (file.name.startsWith('.')) continue;
+        if (file.name.match(/\.thumb\.(jpg|jpeg|png)$/i)) continue;
+        const ext = path.extname(file.name).toLowerCase();
+        const type = getMediaTypeByExt(ext);
+        if (!type) continue;
+        count++;
+        const url = `/输出/${encodeURIComponent(folderName)}/${encodeURIComponent(item.name)}/${encodeURIComponent(file.name)}`;
+        allCovers.push({ url, type, mtime: fs.statSync(path.join(datePath, file.name)).mtime });
+        if (!cover || (type === 'image' && coverType !== 'image')) {
+          cover = url;
+          coverType = type;
+        }
+      }
+
+      if (count > 0) {
+        allCovers.sort((a, b) => a.mtime - b.mtime);
+        const lastThreeUrls = allCovers.slice(-3).map(c => c.url);
+        subfolders.push({
+          name: item.name,
+          count,
+          cover,
+          covers: lastThreeUrls,
+          coverType: coverType || 'image'
+        });
+      }
+    }
+
+    subfolders.sort((a, b) => b.name.localeCompare(a.name));
+    res.json({ folders: subfolders });
+  } catch (err) {
+    console.error('获取子文件夹列表失败:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 获取文件夹内容
 app.get('/api/gallery/folder/:name', async (req, res) => {
   try {

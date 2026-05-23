@@ -92,13 +92,43 @@
     },
     {
       "id": "app_1774611891576_zmfvcrj71",
-      "name": "Z-image turbo 标准工作流",
-      "web_app_id": 46445,
+      "name": "Z-image-turbo",
+      "web_app_id": 54663,
       "icon": null,
       "iconBgColor": "#6366f1",
-      "exampleCode": "# Shell 示例代码\r\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\r\n  -d '{\r\n  \"web_app_id\": 46445,\r\n  \"suppress_preview_output\": false,\r\n  \"input_values\": {\r\n    \"6:CLIPTextEncode.text\": \"倾斜构图、远景、超广角、自拍照、景深、空间感、层次感，自拍视角， 古风模特美人，走秀，全身，气质空濛，炎热的夏天，18岁少女，俏皮可爱，中午。电影氛围感，情绪氛围感，线条清晰，明暗对比，超高清，高级感，最高画质，全身镜头拍摄，摩卡少女樱真人拍摄，长发及腰、超长耳坠、碎发、多条细长飞舞发带、宽松彩色汉服露出，如楚辞山鬼般的人物，在昏暗森林里的全身人像写真，丰富细节，含情眼，邪魅，魅惑，朦胧感，丰富的细节，眼神充满故事感，嘴巴微微张开。淡淡的喜悦，发丝凌乱，精致细长耳坠，高质量，写实逼真，光滑水润细腻冷白皮肤肌理，3D高精度建模渲染，立体唇纹反光，细腻皮肤纹理 柔和 8K超清真人比例建模，电影级景深，衣服细节捕捉，瞳孔虹膜分层着色。高饱和全彩。妙龄绝美热情。完美锁骨，冷白光照在脸上。电影级构图。王家卫电影风格。风吹起衣裳飘逸。素衣清颜。简单素雅头饰，临水照影眸含烟，似随时化雾归去。斑驳树影，真人模仿，超高清，超细腻的画面细节，真实的皮肤 纹理，究极衣服细节，光滑细腻的皮肤，扬的头发，细节丰富的发丝，宁静优雅，布满水珠的皮肤，氛围感，32K，超逼真的皮肤纹理，超级详细，高度细节，注重细节，明脂对比，究极细节，大师级光影，层次感，立体感，极致的光线，发细腻，发丝细腻，眼眸俏皮地眨动，姿态灵动，动作自然、角色扮演、模特全身特写\",\r\n    \"13:EmptySD3LatentImage.width\": 1024,\r\n    \"13:EmptySD3LatentImage.height\": 1024,\r\n    \"13:EmptySD3LatentImage.batch_size\": 1\r\n  }\r\n}'",
+      "exampleCode": "# Shell 示例代码\ncurl -X POST \"https://api.bizyair.cn/w/v1/webapp/task/openapi/create\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\\n  -d '{\n  \"web_app_id\": 54663,\n  \"suppress_preview_output\": true,\n  \"input_values\": {\n    \"6:CLIPTextEncode.text\": \"超远景，超广角。航拍全景。全身照。视角广阔。精细CG，绝世容颜美女，垂坠感，线条清晰，浅金色长发，发丝蓬松细腻，细腻肌理，写实逼真，1个性感的女人,3D渲染，长发及腰，淡红微嘟薄唇，正脸，异常巨大的胸部,巨乳,丰满自然的乳房,冷白皮，肤如凝脂，肌肤似雪。柔顺飘逸及腰长发，真实发丝质感，额头没有刘海，发丝根根分明，展现丰富色彩层次、细腻质感和真实光影。写实皮肤，妖冶，五官立体，唇色湿润，表情高冷、腹黑且帅气，眼神冷漠无情，佩戴极繁华丽细闪云母光泽的做工精细的饰品，画面光影真实，生物学发光，头发上装饰了无数金属流苏飘带，金属流苏飘带璀璨星河堆砌覆盖，神灵之资灵动与生机，浅色衣裙极繁华丽飘逸重工，弯弓射箭，姿态优美，质感真实，光影效果营造出氛围，整体兼具艺术幻想感，夸张的广角透视效果，耀光，反射，铺满高光点。凸显细腻肌理，背景为宏大的雾霾蓝玄幻暮光神殿，整体风格圣洁系列，色彩逼真, 鲜艳生动, 超广角, 超高清晰度, 8k分 辨率, 体积光，3D建模，真人写真，这身渐变珠宝，华丽珍贵渐变项链耳环手链戒指，身材，饱满，瓷肌玉肤，皮肤超细腻，闪亮发饰，雍容华贵，气质极佳，高贵大气，细腻浅金发，梦幻光，添加灵力光粒特效，水钻手链装饰。绝世妆容，五官极为华丽精致，华丽耳环项链。电影级写真，丰富艺术照。\",\n    \"7:CLIPTextEncode.text\": \"模糊、丑陋、糟糕,畸形,多余的手指,多余的肢体,\",\n    \"3:KSampler.steps\": 9,\n    \"3:KSampler.sampler_name\": \"euler\",\n    \"3:KSampler.scheduler\": \"simple\",\n    \"28:EmptyLatentImage.width\": 1080,\n    \"28:EmptyLatentImage.height\": 1920,\n    \"30:Seed (rgthree).seed\": -1\n  }\n}'",
       "isDefault": true,
-      "createdAt": "2026-03-27"
+      "createdAt": "2026-05-23",
+      "parameterTypeOverrides": {
+        "6:CLIPTextEncode.text": {
+          "label": "正面提示词"
+        },
+        "7:CLIPTextEncode.text": {
+          "label": "负面提示词"
+        },
+        "3:KSampler.steps": {
+          "label": "步数"
+        },
+        "3:KSampler.sampler_name": {
+          "type": "select",
+          "options": ["euler", "euler_ancestral", "heun", "dpm_2", "dpm_2_ancestral", "lms", "dpm_fast", "dpm_adaptive", "dpmpp_2s_ancestral", "dpmpp_2m", "dpmpp_sde", "ddim", "uni_pc", "uni_pc_bh2"],
+          "label": "采样器"
+        },
+        "3:KSampler.scheduler": {
+          "type": "select",
+          "options": ["simple", "normal", "karras", "exponential", "sgm_uniform", "ddim_uniform"],
+          "label": "调度器"
+        },
+        "28:EmptyLatentImage.width": {
+          "label": "宽度"
+        },
+        "28:EmptyLatentImage.height": {
+          "label": "高度"
+        },
+        "30:Seed (rgthree).seed": {
+          "label": "种子"
+        }
+      }
     },
     {
       "id": "app_1774611891576_06qe5wc85",

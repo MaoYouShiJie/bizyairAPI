@@ -202,12 +202,13 @@ const MediaThumb = React.memo(({ file, index, onClick }) => {
 
 export default function Gallery({ onClose }) {
   const [folders, setFolders] = useState([])
-  const [currentFolder, setCurrentFolder] = useState(null)
+  const [currentModel, setCurrentModel] = useState(null)
+  const [currentDate, setCurrentDate] = useState(null)
+  const [dateFolders, setDateFolders] = useState([])
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(true)
   const [saveDir, setSaveDir] = useState('')
 
-  // 前端缓存：文件夹内容按名称缓存，返回时不重新请求
   const folderCacheRef = useRef({})
   const foldersLoadedRef = useRef(false)
 
@@ -439,19 +440,33 @@ export default function Gallery({ onClose }) {
     }
   }
 
-  const loadFolderContent = async (folderName) => {
-    // 如果已经缓存了这个文件夹的内容，直接使用缓存
-    if (folderCacheRef.current[folderName]) {
-      setFiles(folderCacheRef.current[folderName])
-      setCurrentFolder(folderName)
+  const loadDateFolders = async (modelName) => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`/api/gallery/subfolders/${encodeURIComponent(modelName)}`)
+      setDateFolders(response.data.folders)
+      setCurrentModel(modelName)
+      setCurrentDate(null)
+    } catch (err) {
+      console.error('加载日期子文件夹失败:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const loadFolderContent = async (modelName, date) => {
+    const cacheKey = `${modelName}/${date}`
+    if (folderCacheRef.current[cacheKey]) {
+      setFiles(folderCacheRef.current[cacheKey])
+      setCurrentDate(date)
       return
     }
     setLoading(true)
     try {
-      const response = await axios.get(`/api/gallery/folder/${encodeURIComponent(folderName)}`)
-      folderCacheRef.current[folderName] = response.data.files
+      const response = await axios.get(`/api/gallery/folder/${encodeURIComponent(`${modelName}/${date}`)}`)
+      folderCacheRef.current[cacheKey] = response.data.files
       setFiles(response.data.files)
-      setCurrentFolder(folderName)
+      setCurrentDate(date)
     } catch (err) {
       console.error('加载文件夹内容失败:', err)
     } finally {
@@ -460,9 +475,16 @@ export default function Gallery({ onClose }) {
   }
 
   const goBack = () => {
-    setCurrentFolder(null)
     setViewerIndex(null)
-    loadFolders()
+    if (currentDate) {
+      setCurrentDate(null)
+      setFiles([])
+    } else if (currentModel) {
+      setCurrentModel(null)
+      setCurrentDate(null)
+      setDateFolders([])
+      loadFolders()
+    }
   }
 
   // 重新居中当前图片（用于重置按钮/按0键）
@@ -499,9 +521,14 @@ export default function Gallery({ onClose }) {
       await axios.delete('/api/gallery', { data: { file_path: filePath } })
       setFiles(files.filter(f => f.path !== filePath))
       if (viewerIndex !== null) setViewerIndex(null)
-      if (currentFolder) delete folderCacheRef.current[currentFolder]
+      if (currentModel && currentDate) {
+        const cacheKey = `${currentModel}/${currentDate}`
+        delete folderCacheRef.current[cacheKey]
+      }
       foldersLoadedRef.current = false
-      if (currentFolder) loadFolderContent(currentFolder)
+      if (currentModel && currentDate) {
+        loadFolderContent(currentModel, currentDate)
+      }
     } catch (err) {
       alert('删除失败: ' + err.message)
     }
@@ -667,7 +694,7 @@ export default function Gallery({ onClose }) {
   }
 
   // 文件夹堆叠组件（类扑克牌扇面展开效果）
-  const StackedFolder = ({ folder }) => {
+  const StackedFolder = ({ folder, onClick }) => {
     // 取最多3个封面（最新生成的在最前面）
     const coverImages = (folder.covers || []).slice().reverse()
     // 补齐到3个，不足的用 null 占位
@@ -684,7 +711,7 @@ export default function Gallery({ onClose }) {
     return (
       <div
         className="relative w-full aspect-[9/14] cursor-pointer transition-all duration-200 hover:scale-[1.04]"
-        onClick={() => loadFolderContent(folder.name)}
+        onClick={onClick}
         onMouseEnter={() => setGlow(true)}
         onMouseLeave={() => setGlow(false)}
         style={{
@@ -757,7 +784,7 @@ export default function Gallery({ onClose }) {
       {/* 头部 */}
       <div className="h-12 bg-slate-900/90 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-3">
-          {currentFolder ? (
+          {currentModel ? (
             <>
               <button
                 onClick={goBack}
@@ -766,10 +793,12 @@ export default function Gallery({ onClose }) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="15 18 9 12 15 6"/>
                 </svg>
-                返回资产库
+                {currentDate ? '返回日期列表' : '返回资产库'}
               </button>
-              <span className="text-white font-medium text-sm">{currentFolder === '__root__' ? saveDir.split('\\').pop() || saveDir : currentFolder}</span>
-              <span className="text-slate-500 text-xs">· {imageFiles.length} 个文件</span>
+              <span className="text-white font-medium text-sm">
+                {currentModel}{currentDate ? ` / ${currentDate}` : ''}
+              </span>
+              <span className="text-slate-500 text-xs">· {currentDate ? `${imageFiles.length} 个文件` : `${dateFolders.length} 个日期`}</span>
             </>
           ) : (
             <>
@@ -784,7 +813,7 @@ export default function Gallery({ onClose }) {
         </div>
 
         {/* 保存目录路径栏（资产库根视图时显示） */}
-        {!currentFolder && (
+        {!currentModel && (
           <div className="flex items-center gap-2 flex-1 max-w-3xl mx-6">
             <button
               onClick={handleSelectDir}
@@ -847,8 +876,8 @@ export default function Gallery({ onClose }) {
 
       {/* 内容 */}
       <div className="flex-1 overflow-y-scroll p-4 bg-black">
-        {/* 文件夹列表 — 始终挂载，用 hidden 切换避免 DOM 卸载导致图片重新加载 */}
-        <div className={currentFolder ? 'hidden' : ''}>
+        {/* 模型文件夹列表 — 根视图 */}
+        <div className={currentModel ? 'hidden' : ''}>
           {loading && !foldersLoadedRef.current ? (
             <div className="flex items-center justify-center h-full">
               <div className="flex flex-col items-center gap-3">
@@ -870,7 +899,7 @@ export default function Gallery({ onClose }) {
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-x-4 gap-y-8">
               {sortedFolders.map((folder, i) => (
                 <div key={folder.name} className="group" style={{ paddingBottom: '40px' }}>
-                  <StackedFolder folder={folder} />
+                  <StackedFolder folder={folder} onClick={() => loadDateFolders(folder.name)} />
                   <div className="mt-2">
                     <p className="text-white text-xs font-medium truncate text-center">{folder.name}</p>
                   </div>
@@ -880,8 +909,41 @@ export default function Gallery({ onClose }) {
           )}
         </div>
 
-        {/* 文件列表 — 始终挂载，用 hidden 切换 */}
-        <div className={!currentFolder ? 'hidden' : ''}>
+        {/* 日期子文件夹列表 — 点进模型后 */}
+        <div className={!currentModel || currentDate ? 'hidden' : ''}>
+          {loading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-slate-500 text-sm">加载中...</span>
+              </div>
+            </div>
+          ) : dateFolders.length === 0 ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center text-slate-500">
+                <svg className="w-16 h-16 mx-auto mb-3 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                </svg>
+                <p>此模型暂无日期分类</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-x-4 gap-y-8">
+              {dateFolders.map((folder, i) => (
+                <div key={folder.name} className="group" style={{ paddingBottom: '40px' }}>
+                  <StackedFolder folder={folder} onClick={() => loadFolderContent(currentModel, folder.name)} />
+                  <div className="mt-2">
+                    <p className="text-white text-xs font-medium truncate text-center">{folder.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 文件列表 — 点进日期后 */}
+        <div className={!currentDate ? 'hidden' : ''}>
           {imageFiles.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-slate-500">此文件夹为空</div>
