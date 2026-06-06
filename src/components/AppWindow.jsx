@@ -2244,9 +2244,14 @@ function HistoryPanel({ records, loading, onReuse, onDelete }) {
                   {rec.outputs.map((out, i) => {
                     const url = out.object_url || out.url || out
                     if (typeof url !== 'string') return null
-                    const isImg = url.match(/\.(jpg|jpeg|png|gif|webp|bmp)$/i)
+                    const cleanUrl = url.split('?')[0].split('#')[0]
+                    const ext = cleanUrl.split('.').pop().toLowerCase()
+                    const isVideo = ['mp4', 'webm', 'mov', 'avi', 'm4v'].includes(ext)
+                    const isAudio = ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'opus'].includes(ext)
+                    const isText = ['json', 'txt', 'csv', 'md', 'log'].includes(ext)
+                    const isImg = !isVideo && !isAudio && !isText
                     return isImg ? (
-                      <img key={i} src={url} alt="" className="w-12 h-12 object-cover rounded border border-white/10" />
+                      <img key={i} src={url} alt="" className="w-12 h-12 object-cover rounded border border-white/10" loading="lazy" onError={(e) => { e.target.style.display = 'none' }} />
                     ) : null
                   })}
                 </div>
