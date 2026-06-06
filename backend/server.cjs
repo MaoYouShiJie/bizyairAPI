@@ -25,6 +25,7 @@ let CACHE_FILE;
 let watchDir;
 let watchTimer = null;
 let THUMB_DIR;
+let historyPath;
 
 function reloadDataDirPaths() {
   configPath = path.join(dataDir, 'apps.json');
@@ -37,6 +38,7 @@ function reloadDataDirPaths() {
   CACHE_FILE = path.join(saveDir, '..', '.gallery-cache.json');
   watchDir = saveDir;
   THUMB_DIR = path.join(saveDir, '..', '.thumbcache');
+  historyPath = path.join(dataDir, 'history.json');
 }
 
 function startServer(options = {}) {
@@ -1401,7 +1403,6 @@ app.post('/api/save-outputs', async (req, res) => {
 });
 
 // ============= 历史记录 =============
-const historyPath = path.join(dataDir, 'history.json');
 
 function loadHistoryFile(p) {
   try {
