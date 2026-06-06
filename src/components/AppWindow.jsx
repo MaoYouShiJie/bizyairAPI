@@ -1264,8 +1264,7 @@ const [historyLoading, setHistoryLoading] = useState(false)
             if (isCurrentTab) { setResult(outputs); setLoading(false) }
             addLog(`完成! 共${outputs.length}个输出`, 'success')
             updateTabData(tabId, { result: outputs, loading: false, progress: 100, progressText: '完成' })
-            if (outputs.length > 0) autoSaveOutputs(outputs, tabId)
-            saveHistory({ inputValues: tabDataRef.current[tabId]?.inputValues || inputValues, outputs, taskId })
+            if (outputs.length > 0) { await autoSaveOutputs(outputs, tabId); const savedOutputs = tabDataRef.current[tabId]?.result || outputs; saveHistory({ inputValues: tabDataRef.current[tabId]?.inputValues || inputValues, outputs: savedOutputs, taskId }) } else { saveHistory({ inputValues: tabDataRef.current[tabId]?.inputValues || inputValues, outputs, taskId }) }
             window.dispatchEvent(new CustomEvent('bizyair-balance-refresh'))
           } else if (st === 'failed' || st === 'error') {
             const inner = s.data?.data || {}
@@ -2251,7 +2250,7 @@ function HistoryPanel({ records, loading, onReuse, onDelete }) {
                     const isText = ['json', 'txt', 'csv', 'md', 'log'].includes(ext)
                     const isImg = !isVideo && !isAudio && !isText
                     return isImg ? (
-                      <img key={i} src={url} alt="" className="w-12 h-12 object-cover rounded border border-white/10" loading="lazy" onError={(e) => { e.target.style.display = 'none' }} />
+                      <img key={i} src={url} alt="" className="w-12 h-12 object-cover rounded border border-white/10" loading="lazy" />
                     ) : null
                   })}
                 </div>
