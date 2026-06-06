@@ -471,6 +471,92 @@
       "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 48983,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"270:LoadImage.image\": \"https://storage.bizyair.cn/inputs/20260320/GxFKIw3v5yI1bj7ToP7e2z2OeqQYmBTi.png\",\n        \"281:CR Text.text\": \"8k，4k，暖色调（真实滤镜），凄美光影\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
       "isDefault": false,
       "createdAt": "2026-05-21"
+    },
+    {
+      "id": "app_1780413147693_yhmd9jc3a",
+      "name": "V22二采出图 Qwen-Rapid-AIO-NSFW",
+      "web_app_id": 41874,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 41874,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"6:CLIPTextEncode.text\": \"一个帅气的中年男子,全身赤裸,强壮的身体,帅气的脸,健美身材,粗壮的阴茎,\",\n        \"4:EmptySD3LatentImage.width\": 1080,\n        \"4:EmptySD3LatentImage.height\": 1920,\n        \"4:EmptySD3LatentImage.batch_size\": 1,\n        \"13:LatentUpscaleBy.scale_by\": 1.5\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-06-02"
+    },
+    {
+      "id": "app_1780440512989_1qqqmg17i",
+      "name": "F2P-人脸生成图像 Qwen-Rapid-AIO-v22",
+      "web_app_id": 47578,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 47578,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"111:TextEncodeQwenImageEditPlus.prompt\": \"一位身着专业登山装备的女人傲然伫立在巍峨的雪山上。她头戴保暖且防风的滑雪帽，帽子边缘露出几缕被寒风吹得有些凌乱的秀发，帽身的色彩鲜艳夺目，可能是活力的红色或是亮眼的黄色，与洁白的雪形成鲜明对比。她的脸上围着一条厚实的围巾，仅露出一双清澈而坚毅的眼睛，眼中透露出无畏与果敢。身着的登山服剪裁修身，兼具保暖与功能性，颜色以耐脏的深色为主，或许带有一些银色的反光条装饰，在阳光的照耀下微微闪烁。\\n脚下是一片连绵起伏、银装素裹的雪山。山峰高耸入云，山顶覆盖着终年不化的积雪，在阳光的映照下闪耀着圣洁的光芒。山腰处有些裸露的黑色岩石，从洁白的雪被中突兀地探出，增添了几分冷峻与沧桑。女人所站之处，雪厚且松软，留下了深深浅浅的脚印，仿佛在诉说着她攀登的艰辛历程。\\n天空湛蓝如宝石，没有一丝杂质，与白色的雪山相互映衬，显得格外澄澈。空中飘荡着几朵洁白如雪的云朵，它们形态各异，有的像棉花糖般蓬松，有的如薄纱般轻盈。阳光从云朵的缝隙间倾泻而下，洒在雪山上，形成一片片明亮的光斑，让整个雪山仿佛被镀上了一层金色的光辉。而女人就站在这片光影交错之中，宛如一位征服冰雪世界的女王，散发着自信与豪迈的气质。画面整体色彩明快，以白色的雪、蓝色的天空为主色调，搭配女人鲜艳的服装，营造出一种壮美且震撼的视觉效果。\",\n        \"78:LoadImage.image\": \"https://bizyair-prod.oss-cn-shanghai.aliyuncs.com/inputs/20260305/0pq8exEGgluB7gVCPoK8ElkLlSNbllUv.png\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-06-02"
+    },
+    {
+      "id": "app_1780441660797_g08bctwtv",
+      "name": "Z-image-turbo-nsfw",
+      "web_app_id": 55317,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 55317,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"6:CLIPTextEncode.text\": \"超远景，超广角。航拍全景。全身照。视角广阔。精细CG，绝世容颜美女，垂坠感，线条清晰，浅金色长发，发丝蓬松细腻，细腻肌理，写实逼真，1个性感的女人,3D渲染，长发及腰，淡红微嘟薄唇，正脸，异常巨大的胸部,巨乳,丰满自然的乳房,冷白皮，肤如凝脂，肌肤似雪。柔顺飘逸及腰长发，真实发丝质感，额头没有刘海，发丝根根分明，展现丰富色彩层次、细腻质感和真实光影。写实皮肤，妖冶，五官立体，唇色湿润，表情高冷、腹黑且帅气，眼神冷漠无情，佩戴极繁华丽细闪云母光泽的做工精细的饰品，画面光影真实，生物学发光，头发上装饰了无数金属流苏飘带，金属流苏飘带璀璨星河堆砌覆盖，神灵之资灵动与生机，浅色衣裙极繁华丽飘逸重工，弯弓射箭，姿态优美，质感真实，光影效果营造出氛围，整体兼具艺术幻想感，夸张的广角透视效果，耀光，反射，铺满高光点。凸显细腻肌理，背景为宏大的雾霾蓝玄幻暮光神殿，整体风格圣洁系列，色彩逼真, 鲜艳生动, 超广角, 超高清晰度, 8k分 辨率, 体积光，3D建模，真人写真，这身渐变珠宝，华丽珍贵渐变项链耳环手链戒指，身材，饱满，瓷肌玉肤，皮肤超细腻，闪亮发饰，雍容华贵，气质极佳，高贵大气，细腻浅金发，梦幻光，添加灵力光粒特效，水钻手链装饰。绝世妆容，五官极为华丽精致，华丽耳环项链。电影级写真，丰富艺术照。\",\n        \"7:CLIPTextEncode.text\": \"模糊、丑陋、糟糕,畸形,多余的手指,多余的肢体,\",\n        \"3:KSampler.steps\": 9,\n        \"3:KSampler.sampler_name\": \"euler\",\n        \"3:KSampler.scheduler\": \"simple\",\n        \"28:EmptyLatentImage.width\": 1080,\n        \"28:EmptyLatentImage.height\": 1920,\n        \"30:Seed (rgthree).seed\": -1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-06-02",
+      "parameterTypeOverrides": {
+        "3:KSampler.sampler_name": {
+          "type": "select",
+          "options": [
+            "euler",
+            "euler_ancestral"
+          ]
+        },
+        "3:KSampler.scheduler": {
+          "type": "select",
+          "options": [
+            "simple",
+            "normal",
+            "karras",
+            "sgm_uniform"
+          ]
+        }
+      }
+    },
+    {
+      "id": "app_1780444588349_kup2p3max",
+      "name": "Z-image-turbo-黑兽",
+      "web_app_id": 55319,
+      "icon": "",
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 55319,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"6:CLIPTextEncode.text\": \"超远景，超广角。航拍全景。全身照。视角广阔。精细CG，绝世容颜美女，垂坠感，线条清晰，浅金色长发，发丝蓬松细腻，细腻肌理，写实逼真，1个性感的女人,3D渲染，长发及腰，淡红微嘟薄唇，正脸，异常巨大的胸部,巨乳,丰满自然的乳房,冷白皮，肤如凝脂，肌肤似雪。柔顺飘逸及腰长发，真实发丝质感，额头没有刘海，发丝根根分明，展现丰富色彩层次、细腻质感和真实光影。写实皮肤，妖冶，五官立体，唇色湿润，表情高冷、腹黑且帅气，眼神冷漠无情，佩戴极繁华丽细闪云母光泽的做工精细的饰品，画面光影真实，生物学发光，头发上装饰了无数金属流苏飘带，金属流苏飘带璀璨星河堆砌覆盖，神灵之资灵动与生机，浅色衣裙极繁华丽飘逸重工，弯弓射箭，姿态优美，质感真实，光影效果营造出氛围，整体兼具艺术幻想感，夸张的广角透视效果，耀光，反射，铺满高光点。凸显细腻肌理，背景为宏大的雾霾蓝玄幻暮光神殿，整体风格圣洁系列，色彩逼真, 鲜艳生动, 超广角, 超高清晰度, 8k分 辨率, 体积光，3D建模，真人写真，这身渐变珠宝，华丽珍贵渐变项链耳环手链戒指，身材，饱满，瓷肌玉肤，皮肤超细腻，闪亮发饰，雍容华贵，气质极佳，高贵大气，细腻浅金发，梦幻光，添加灵力光粒特效，水钻手链装饰。绝世妆容，五官极为华丽精致，华丽耳环项链。电影级写真，丰富艺术照。\",\n        \"7:CLIPTextEncode.text\": \"模糊、丑陋、糟糕,畸形,多余的手指,多余的肢体,\",\n        \"3:KSampler.steps\": 9,\n        \"3:KSampler.sampler_name\": \"euler\",\n        \"3:KSampler.scheduler\": \"simple\",\n        \"28:EmptyLatentImage.width\": 1080,\n        \"28:EmptyLatentImage.height\": 1920,\n        \"30:Seed (rgthree).seed\": -1\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-06-02",
+      "parameterTypeOverrides": {
+        "3:KSampler.sampler_name": {
+          "type": "select",
+          "options": [
+            "euler",
+            "euler_ancestral"
+          ]
+        },
+        "3:KSampler.scheduler": {
+          "type": "select",
+          "options": [
+            "simple",
+            "normal",
+            "karras",
+            "sgm_uniform"
+          ]
+        }
+      }
+    },
+    {
+      "id": "app_1780450881983_ycrm5jtdp",
+      "name": "GPT文生图",
+      "web_app_id": 55269,
+      "icon": null,
+      "iconBgColor": "#6366f1",
+      "exampleCode": "// JavaScript 示例代码\nconst response = await fetch('https://api.bizyair.cn/w/v1/webapp/task/openapi/create', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n      \"web_app_id\": 55269,\n      \"suppress_preview_output\": true,\n      \"input_values\": {\n        \"17:BizyAir_GPT_IMAGE_2_T2I_API.prompt\": \"(请你自行优化提示词)手机手持拍摄视角，手持稳定跟拍，全程保持人物全身入镜。一位 26 岁性感中国女明星，模特身材，网红脸，欧式冷白皮通透细腻，皮肤质感精致，胸部丰满挺拔，黑色长发，头戴精致发饰，双耳佩戴精致小巧耳钉，五官端正立体，眼睛明亮有神。她身着半透丝质露背长裙，深 V 领设计，腰胸部位面料更透，衣物下肌肤若隐若现，裙摆自然垂地；搭配黑色薄透丝袜，大腿上部饰有深色蕾丝花纹，脚穿黑色亮面高跟鞋，鞋跟细长。她坐在现代简约客厅的白色地毯上，双腿分开呈 M 形，双手托住胸部下方，身体微微后仰，直视镜头。背景为简约现代客厅，可见柔软的白色沙发；左侧窗户透进柔和自然光，搭配室内低饱和度暖光，整体光线偏冷调，突出冷白皮质感与衣物层次感。\",\n        \"17:BizyAir_GPT_IMAGE_2_T2I_API.aspect_ratio\": \"9:16\",\n        \"17:BizyAir_GPT_IMAGE_2_T2I_API.resolution\": \"4k\"\n      }\n    })\n});\n\nconst result = await response.json();\nconsole.log('生成结果:', result);",
+      "isDefault": false,
+      "createdAt": "2026-06-03"
     }
   ]
 }

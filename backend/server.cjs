@@ -1400,6 +1400,72 @@ app.post('/api/save-outputs', async (req, res) => {
   }
 });
 
+// ============= 历史记录 =============
+const historyPath = path.join(dataDir, 'history.json');
+
+function loadHistoryFile(p) {
+  try {
+    if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch {}
+  return {};
+}
+
+function saveHistoryData(h) {
+  fs.writeFileSync(historyPath, JSON.stringify(h, null, 2), 'utf8');
+}
+
+function getHistory(appName) {
+  const h = loadHistoryFile(historyPath);
+  return h[appName] || [];
+}
+
+function upsertHistory(appName, records) {
+  const h = loadHistoryFile(historyPath);
+  h[appName] = records;
+  saveHistoryData(h);
+}
+
+app.get('/api/history/:appName', (req, res) => {
+  try {
+    const appName = decodeURIComponent(req.params.appName);
+    res.json({ records: getHistory(appName) });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/history/:appName', (req, res) => {
+  try {
+    const appName = decodeURIComponent(req.params.appName);
+    const { inputValues, outputs, taskId } = req.body;
+    if (!inputValues) return res.status(400).json({ error: 'inputValues required' });
+    const records = getHistory(appName);
+    records.unshift({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      inputValues,
+      outputs: outputs || [],
+      taskId: taskId || '',
+      timestamp: new Date().toISOString(),
+    });
+    upsertHistory(appName, records);
+    res.json({ success: true, count: records.length });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/history/:appName/:id', (req, res) => {
+  try {
+    const appName = decodeURIComponent(req.params.appName);
+    const { id } = req.params;
+    const records = getHistory(appName).filter(r => r.id !== id);
+    upsertHistory(appName, records);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // ============= 相册缓存（持久化 + fs.watch 监听） =============
 let galleryCacheData = null; // 内存缓存，启动时从文件加载
 

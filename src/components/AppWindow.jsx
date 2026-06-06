@@ -833,6 +833,11 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
   const nextTabIdRef = useRef(2)
   const [tabVersion, setTabVersion] = useState(0) // 递增计数器，触发重渲染
 
+// 历史记录
+const [historyRecords, setHistoryRecords] = useState([])
+const [showHistory, setShowHistory] = useState(false)
+const [historyLoading, setHistoryLoading] = useState(false)
+
   const getActiveTabData = () => tabDataRef.current[activeTabId] || tabDataRef.current['tab_1'] || {}
   
   // 标签页切换时同步 tabDataRef → React state
@@ -1260,6 +1265,7 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
             addLog(`完成! 共${outputs.length}个输出`, 'success')
             updateTabData(tabId, { result: outputs, loading: false, progress: 100, progressText: '完成' })
             if (outputs.length > 0) autoSaveOutputs(outputs, tabId)
+            saveHistory({ inputValues: tabDataRef.current[tabId]?.inputValues || inputValues, outputs, taskId })
             window.dispatchEvent(new CustomEvent('bizyair-balance-refresh'))
           } else if (st === 'failed' || st === 'error') {
             const inner = s.data?.data || {}
@@ -1342,6 +1348,38 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
       setAppIcon(resp.data.url)
     } catch (err) { setError('上传图标失败') }
   }
+
+  // 加载历史记录
+  const loadHistory = useCallback(async () => {
+    if (!app?.id) return
+    setHistoryLoading(true)
+    try {
+      const res = await axios.get(`/api/history/${encodeURIComponent(app.id)}`)
+      setHistoryRecords(res.data.records || [])
+    } catch {}
+    setHistoryLoading(false)
+  }, [app?.id])
+
+  // 保存历史记录
+  const saveHistory = useCallback(async (records) => {
+    if (!app?.id) return
+    try {
+      const res = await axios.post(`/api/history/${encodeURIComponent(app.id)}`, records)
+      if (res.data.success) loadHistory()
+    } catch {}
+  }, [app?.id, loadHistory])
+
+  // 删除历史记录
+  const deleteHistory = useCallback(async (id) => {
+    if (!app?.id) return
+    try {
+      await axios.delete(`/api/history/${encodeURIComponent(app.id)}/${id}`)
+      loadHistory()
+    } catch {}
+  }, [app?.id, loadHistory])
+
+  // 挂载时加载历史
+  useEffect(() => { loadHistory() }, [loadHistory])
 
   // 动态识别媒体参数（不依赖后端 type 标记）
   const getEffectiveType = (key) => {
@@ -1974,13 +2012,35 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
               </div>
             </div>
 
-            {/* 右侧：输出结果 */}
+            {/* 右侧：输出结果 + 历史记录 */}
             <div key={'results-' + activeTabId} className="flex-1 relative overflow-hidden">
               {/* 输出内容 */}
               <div className="absolute inset-0 overflow-y-auto p-4" style={{ bottom: logsExpanded ? '220px' : '36px' }}>
-                <h3 className="text-white text-sm font-medium mb-3">输出结果</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-white text-sm font-medium">{showHistory ? '历史记录' : '输出结果'}</h3>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setShowHistory(!showHistory) }}
+                    className={`px-2 py-1 text-xs rounded transition ${
+                      showHistory ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                    }`}
+                  >
+                    历史
+                  </button>
+                </div>
                 <div>
-                  {result ? (
+                  {showHistory ? (
+                    <HistoryPanel
+                      records={historyRecords}
+                      loading={historyLoading}
+                      onReuse={(vals) => {
+                        const tabId = activeTabId
+                        setInputValues(vals)
+                        updateTabData(tabId, { inputValues: vals })
+                        setShowHistory(false)
+                      }}
+                      onDelete={deleteHistory}
+                    />
+                  ) : result ? (
                     Array.isArray(result) ? (
                       <div className="grid grid-cols-1 gap-4">
                         {result.map((item, i) => (
@@ -2121,6 +2181,93 @@ export default function AppWindow({ app, onClose, onMinimize, onMaximize, onBrin
           <div className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize" onMouseDown={(e) => handleResizeStart(e, 'se')} />
         </>
       )}
+    </div>
+  )
+}
+
+// ============ 历史记录面板 ============
+function HistoryPanel({ records, loading, onReuse, onDelete }) {
+  const [expanded, setExpanded] = useState(null)
+
+  if (loading) {
+    return <div className="text-center py-8"><div className="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+  }
+
+  if (!records || records.length === 0) {
+    return <div className="text-center py-16 text-slate-500 text-sm">暂无历史记录</div>
+  }
+
+  return (
+    <div className="space-y-2">
+      {records.map((rec) => (
+        <div key={rec.id} className="bg-slate-800/60 border border-white/10 rounded-lg overflow-hidden">
+          <button
+            onClick={() => setExpanded(expanded === rec.id ? null : rec.id)}
+            className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-white/5 transition"
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <svg className="w-3.5 h-3.5 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span className="text-xs text-slate-400 truncate">{rec.timestamp ? new Date(rec.timestamp).toLocaleString('zh-CN') : ''}</span>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onReuse(rec.inputValues || {})
+                }}
+                className="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded"
+                title="复用此历史配置"
+              >
+                复用
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (confirm('删除此记录?')) onDelete(rec.id)
+                }}
+                className="p-0.5 text-slate-600 hover:text-red-400 transition"
+                title="删除"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          </button>
+          {expanded === rec.id && (
+            <div className="px-3 pb-2 pt-0 space-y-1.5 border-t border-white/5">
+              {rec.outputs && rec.outputs.length > 0 && (
+                <div className="flex flex-wrap gap-2 pt-1.5">
+                  {rec.outputs.map((out, i) => {
+                    const url = out.object_url || out.url || out
+                    if (typeof url !== 'string') return null
+                    const isImg = url.match(/\.(jpg|jpeg|png|gif|webp|bmp)$/i)
+                    return isImg ? (
+                      <img key={i} src={url} alt="" className="w-12 h-12 object-cover rounded border border-white/10" />
+                    ) : null
+                  })}
+                </div>
+              )}
+              {rec.inputValues && Object.keys(rec.inputValues).length > 0 && (
+                <div className="space-y-1">
+                  {Object.entries(rec.inputValues).slice(0, 5).map(([k, v]) => (
+                    <div key={k} className="flex items-start gap-2 text-xs">
+                      <span className="text-slate-500 shrink-0 min-w-[60px] truncate">{k}:</span>
+                      <span className="text-slate-300 truncate">{String(v).substring(0, 80)}</span>
+                    </div>
+                  ))}
+                  {Object.keys(rec.inputValues).length > 5 && (
+                    <div className="text-xs text-slate-500">...还有 {Object.keys(rec.inputValues).length - 5} 个参数</div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   )
 }
